@@ -5,12 +5,6 @@ namespace Spry\SpryCli;
 use Spry\Spry as Spry;
 use Spry\SpryComponent\SpryTools as SpryTools;
 
-include(dirname(dirname(__FILE__)).'/src/Spry.php');
-include(dirname(dirname(__FILE__)).'/src/components/SpryDB.php');
-include(dirname(dirname(__FILE__)).'/src/components/SpryLog.php');
-include(dirname(dirname(__FILE__)).'/src/components/SpryValidator.php');
-include(dirname(dirname(__FILE__)).'/src/components/SpryTools.php');
-
 // Setup Server Vars for CLI
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
@@ -353,5 +347,3 @@ class SpryCli extends SpryTools {
         }
     }
 }
-
-SpryCli::run();

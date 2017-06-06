@@ -27,5 +27,5 @@ do
     fi
 done
 
-php $DIR/cli.php "$@"
+php $DIR/spry.php "$@"
 echo '';

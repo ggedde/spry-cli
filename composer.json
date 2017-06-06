@@ -3,7 +3,8 @@
     "description": "Command Line Interface for spry",
     "type": "Command Line Interface",
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "ggedde/spry": "~2.0.0"
     },
     "license": "MIT",
     "authors": [
