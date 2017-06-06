@@ -1,0 +1,21 @@
+{
+    "name": "ggedde/spry-cli",
+    "description": "Command Line Interface for spry",
+    "type": "Command Line Interface",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ggedde",
+            "email": "ggeddedev@gmail.com"
+        }
+    ],
+    "bin": "bin/spry",
+    "autoload": {
+        "psr-4": {
+            "Spry\\SpryCli\\": "src/"
+        }
+    }
+}
