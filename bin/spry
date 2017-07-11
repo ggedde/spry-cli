@@ -1,7 +1,13 @@
 #!/bin/bash
 
-DIR=$(dirname $0)
-SPRYDIR=$(dirname $DIR)
+BIN_DIR=$(dirname $0)
+
+if [ -f $BIN_DIR/spry.php ]
+then
+   SPRY_DIR=$(dirname $BIN_DIR)
+else
+   SPRY_DIR=$(dirname $BIN_DIR)/ggedde/spry-cli
+fi
 
 for arg in "$@"
 do
@@ -12,13 +18,13 @@ do
             echo 'The folder "spry" already exists.'
             exit
         fi
-        cp -r $SPRYDIR/example_project spry
+        cp -r $SPRY_DIR/example_project spry
     fi
 
     if [ "$1" == "up" ] || [ "$1" == "u" ]
     then
         echo ''
-        php $DIR/cli.php "$@"
+        php $SPRY_DIR/src/SpryCli.php "$@"
         php -S localhost:8000 -t $2 &>/dev/null &
         php -S localhost:8001 -t $2 &>/dev/null
         echo ''
@@ -27,5 +33,7 @@ do
     fi
 done
 
-php $DIR/spry.php "$@"
-echo '';
+php $SPRY_DIR/src/SpryCli.php "$@"
+echo ''
+
+exit
