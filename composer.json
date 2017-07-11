@@ -13,7 +13,7 @@
             "email": "ggeddedev@gmail.com"
         }
     ],
-    "bin": "bin/spry",
+    "bin": ["bin/spry"],
     "autoload": {
         "psr-4": {
             "Spry\\SpryCli\\": "src/"
