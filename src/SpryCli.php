@@ -76,4 +76,4 @@ if(!$cli_vendor_autoload_file)
 }
 
 require_once $cli_vendor_autoload_file;
-Spry\SpryConnector\SpryCliConnector::run();
+Spry\SpryConnector\SpryCliConnector::run(dirname(__DIR__));
