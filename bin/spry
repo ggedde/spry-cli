@@ -32,8 +32,7 @@ do
     then
         echo ''
         php $SPRY_DIR/src/SpryCli.php "$@"
-        php -S localhost:8000 -t $2 &>/dev/null &
-        php -S localhost:8001 -t $2 &>/dev/null
+        php -S localhost:8000 -t $2 &>/dev/null
         echo ''
         echo 'Spry Server Closed.'
         exit
