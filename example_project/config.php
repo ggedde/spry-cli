@@ -23,7 +23,8 @@ $config->webtools_endpoint = '/webtools';  	// Make sure this is unique and does
 $config->webtools_username = '';			// Username is required
 $config->webtools_password = '';			// Password is required
 $config->webtools_allowed_ips = [
-	'127.0.0.1'
+	'127.0.0.1',
+	'::1'
 ];
 
 // Database
