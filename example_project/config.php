@@ -13,7 +13,7 @@ $config->api_log_file = __DIR__.'/api.log';
 // Set PHP Error Types
 ini_set('error_reporting', E_ALL);
 
-$config->endpoint = 'http://localhost';
+$config->endpoint = 'http://localhost:8000';
 $config->components_dir = __DIR__.'/components';
 
 
