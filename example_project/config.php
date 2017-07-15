@@ -7,8 +7,8 @@ $config->salt = '';
 
 // Set PHP and API Log file Locations
 // THESE SHOULD BE DISABLED IN PRODUCTION (OR AT LEAST SET SOMEWHERE IN A PRIVATE FOLDER)
-$config->php_log_file = __DIR__.'/php.log';
-$config->api_log_file = __DIR__.'/api.log';
+$config->php_log_file = __DIR__.'/logs/php.log';
+$config->api_log_file = __DIR__.'/logs/api.log';
 
 // Set PHP Error Types
 ini_set('error_reporting', E_ALL);
@@ -29,6 +29,7 @@ $config->webtools_allowed_ips = [
 
 // Database
 $config->db = [
+	'provider' => 'Spry\\SpryProvider\\SpryDB',
 	'database_type' => 'mysql',
 	'database_name' => '',
 	'server' => 'localhost',
@@ -116,24 +117,23 @@ $config->tests = [
 			'response_code' => 5010,
 		]
 	],
-	'test1' => [
-		'route' => '/account/get',
-		'params' => [
-			'access_key' => 'xxxxxxxxxxxxxxxxxxxxxxxx'
-		],
+	'connection2' => [
+		'title' => 'Connection Test with Parameters',
+		'route' => '/testconnection',
+		'params' => ['test' => 123],
 		'expect' => [
-			'response' => 'success',
+			'response_code' => 5011,
 		]
 	],
 ];
 
 // Filters
-$config->hooks->configure = ['SpryLog::setup_php_logs'];
-$config->hooks->params = ['SpryLog::initial_request'];
+$config->hooks->configure = ['Spry\\SpryProvider\\SpryLog::setup_php_logs'];
+$config->hooks->params = ['Spry\\SpryProvider\\SpryLog::initial_request'];
 // $config->hooks->database =  = ['AUTH::check'];
-// $config->hooks->routes = ['SpryLog::user_request'];
-$config->hooks->stop = ['SpryLog::stop_filter'];
-$config->hooks->build_response = ['SpryLog::build_response_filter']; // Filters must return the $response
+// $config->hooks->routes = ['Spry\\SpryProvider\\SpryLog::user_request'];
+$config->hooks->stop = ['Spry\\SpryProvider\\SpryLog::stop_filter'];
+$config->hooks->build_response = ['Spry\\SpryProvider\\SpryLog::build_response_filter']; // Filters must return the $response
 // $config->hooks->send_response = []; // Filters must return the $response
 // $config->hooks->get_path = [];  // Filters must return the $path
 // $config->hooks->get_route = [];  // Filters must return the $route
