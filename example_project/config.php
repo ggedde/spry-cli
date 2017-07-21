@@ -116,6 +116,12 @@ $config->response_codes = [
 
 ];
 
+$config->default_response_headers = [
+	'Access-Control-Allow-Origin: *',
+	'Access-Control-Allow-Methods: GET, POST, OPTIONS',
+	'Access-Control-Allow-Headers: X-Requested-With, content-type'
+];
+
 // Tests
 $config->tests = [
 	'connection' => [
