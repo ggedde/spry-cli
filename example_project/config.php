@@ -9,8 +9,10 @@ $config->salt = '';
 // THESE SHOULD BE DISABLED IN PRODUCTION (OR AT LEAST SET SOMEWHERE IN A PRIVATE FOLDER)
 $config->logger = 'Spry\\SpryProvider\\SpryLog';
 $config->log_format = '%date_time% %ip% %path% - %msg%';
-$config->php_log_file = __DIR__.'/logs/php.log';
-$config->api_log_file = __DIR__.'/logs/api.log';
+$config->log_php_file = __DIR__.'/logs/php.log';
+$config->log_api_file = __DIR__.'/logs/api.log';
+$config->log_max_lines = 5000;
+$config->log_archive = false;
 $config->log_prefix = [
 	'message' => 'Spry: ',
 	'warning' => 'Spry Warning: ',
