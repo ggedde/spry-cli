@@ -7,14 +7,30 @@ $config->salt = '';
 
 // Set PHP and API Log file Locations
 // THESE SHOULD BE DISABLED IN PRODUCTION (OR AT LEAST SET SOMEWHERE IN A PRIVATE FOLDER)
+$config->logger = 'Spry\\SpryProvider\\SpryLog';
+$config->log_format = '%date_time% %ip% %path% - %msg%';
 $config->php_log_file = __DIR__.'/logs/php.log';
 $config->api_log_file = __DIR__.'/logs/api.log';
+$config->log_prefix = [
+	'message' => 'Spry: ',
+	'warning' => 'Spry Warning: ',
+	'error' => 'Spry ERROR: ',
+	'stop' => 'Spry STOPPED: ',
+	'response' => 'Spry Response: ',
+	'request' => 'Spry Request: '
+];
+
+// Set Default Timezone
+date_default_timezone_set('America/Los_Angeles');
 
 // Set PHP Error Types
 ini_set('error_reporting', E_ALL);
 
 $config->endpoint = 'http://localhost:8000';
 $config->components_dir = __DIR__.'/components';
+
+// Path to Composer Vendor folder for SpryCli
+// $config->cli_vendor_path = dirname(__DIR__).'/vendor';
 
 
 // WebTools
@@ -57,9 +73,6 @@ $config->db = [
 
 // Routes
 $config->routes = [
-	'/auth/get' => 'Auth::get',
-	'/account/get' => 'Account::get',
-
 	// '/example/get' => 'Example::get',
 	// '/example/get_all' => 'Example::get_all',
 	// '/example/insert' => 'Example::insert',
@@ -100,10 +113,6 @@ $config->response_codes = [
 
 	// 2304 => ['en' => 'Successfully Deleted Example'],
 	// 5304 => ['en' => 'Error: Deleting Example'],
-
-	/* Accounts */
-	2400 => ['en' => 'Successfully Retrieved Account'],
-	5400 => ['en' => 'Error: Retrieving Account'],
 
 ];
 

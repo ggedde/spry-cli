@@ -28,7 +28,7 @@ class Example
 			'name' => $name
 		];
 
-		return Spry::results(302, Spry::db()->insert($this->table, $data));
+		return Spry::response(302, Spry::db()->insert($this->table, $data));
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Example
 			]
 		];
 
-		return Spry::results(303, Spry::db()->update($this->table, $data, $where));
+		return Spry::response(303, Spry::db()->update($this->table, $data, $where));
 
 	}
 
@@ -86,7 +86,7 @@ class Example
 			]
 		];
 
-		return Spry::results(300, Spry::db()->get($this->table, '*', $where));
+		return Spry::response(300, Spry::db()->get($this->table, '*', $where));
 	}
 
 
@@ -110,7 +110,7 @@ class Example
 			'GROUP' => 'id'
 		];
 
-		return Spry::results(301, Spry::db()->select($this->table, '*', $where));
+		return Spry::response(301, Spry::db()->select($this->table, '*', $where));
 	}
 
 
@@ -136,7 +136,7 @@ class Example
 			]
 		];
 
-		return Spry::results(304, Spry::db()->delete($this->table, $where));
+		return Spry::response(304, Spry::db()->delete($this->table, $where));
 	}
 
 }

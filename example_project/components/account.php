@@ -27,7 +27,7 @@ class Account
 			]
 		];
 
-		return Spry::results(400, Spry::db()->get($this->table, '*', $where));
+		return Spry::response(400, Spry::db()->get($this->table, '*', $where));
 	}
 
 }

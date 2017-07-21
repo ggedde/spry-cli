@@ -33,11 +33,11 @@ class Auth
 				'access_key' => Spry::auth()->user_access_key,
 			];
 
-			return Spry::results(200, $request);
+			return Spry::response(200, $request);
 		}
 
 		sleep(5); // Reduce Hack attempts
-		return Spry::results(200);
+		return Spry::response(200);
 	}
 
 
@@ -102,7 +102,7 @@ class Auth
 	{
 		$permissions = array_keys(Spry::config()->routes);
 
-		return Spry::results(205, $permissions);
+		return Spry::response(205, $permissions);
 	}
 
 
