@@ -6,61 +6,12 @@ use Spry\Spry as Spry;
 
 class Example
 {
-	private $table = 'examples_table';
-
-
 	/**
-	 * Inserts an Item
+	 * Variable to store the table name
 	 *
- 	 * @param string $access_key
- 	 *
- 	 * @access 'public'
- 	 * @return array
+	 * @access 'private'
 	 */
-
-	public function insert()
-	{
-		// Required Fields
-		$name = Spry::validator()->required()->minLength(1)->validate('name');
-
-		$data = [
-			'account_id' => Spry::auth()->account_id,
-			'name' => $name
-		];
-
-		return Spry::response(302, Spry::db()->insert($this->table, $data));
-	}
-
-	/**
-	 * Updates an Item
-	 *
- 	 * @param string $access_key
- 	 * @param int $id
- 	 *
- 	 * @access 'public'
- 	 * @return array
-	 */
-
-	public function update()
-	{
-		// Required Fields
-		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
-		$name = Spry::validator()->required()->minLength(1)->validate('name');
-
-		$data = [
-			'name' => $name
-		];
-
-		$where = [
-			'AND' => [
-				'account_id' => Spry::auth()->account_id,
-				'id' => $id
-			]
-		];
-
-		return Spry::response(303, Spry::db()->update($this->table, $data, $where));
-
-	}
+	private static $table = 'examples_table';
 
 
 
@@ -74,7 +25,7 @@ class Example
  	 * @return array
 	 */
 
-	public function get()
+	public static function get()
 	{
 		// Required Fields
 		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
@@ -82,11 +33,12 @@ class Example
 		$where = [
 			'AND' => [
 				'account_id' => Spry::auth()->account_id,
+				'user_id' => Spry::auth()->user_id,
 				'id' => $id
 			]
 		];
 
-		return Spry::response(300, Spry::db()->get($this->table, '*', $where));
+		return Spry::response(300, Spry::db()->get(self::$table, '*', $where));
 	}
 
 
@@ -100,17 +52,76 @@ class Example
  	 * @return array
 	 */
 
-	public function get_all()
+	public static function get_all()
 	{
 		$where = [
 			'AND' => [
 				'account_id' => Spry::auth()->account_id,
+				'user_id' => Spry::auth()->user_id,
 			],
 			'ORDER' => 'id DESC',
 			'GROUP' => 'id'
 		];
 
-		return Spry::response(301, Spry::db()->select($this->table, '*', $where));
+		return Spry::response(301, Spry::db()->select(self::$table, '*', $where));
+	}
+
+
+
+	/**
+	 * Inserts an Item
+	 *
+ 	 * @param string $access_key
+ 	 *
+ 	 * @access 'public'
+ 	 * @return array
+	 */
+
+	public static function insert()
+	{
+		// Required Fields
+		$name = Spry::validator()->required()->minLength(1)->validate('name');
+
+		$data = [
+			'account_id' => Spry::auth()->account_id,
+			'user_id' => Spry::auth()->user_id,
+			'name' => $name
+		];
+
+		return Spry::response(302, Spry::db()->insert(self::$table, $data));
+	}
+
+
+
+	/**
+	 * Updates an Item
+	 *
+ 	 * @param string $access_key
+ 	 * @param int $id
+ 	 *
+ 	 * @access 'public'
+ 	 * @return array
+	 */
+
+	public static function update()
+	{
+		// Required Fields
+		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
+		$name = Spry::validator()->required()->minLength(1)->validate('name');
+
+		$data = [
+			'name' => $name
+		];
+
+		$where = [
+			'AND' => [
+				'account_id' => Spry::auth()->account_id,
+				'user_id' => Spry::auth()->user_id,
+				'id' => $id
+			]
+		];
+
+		return Spry::response(303, Spry::db()->update(self::$table, $data, $where));
 	}
 
 
@@ -125,18 +136,19 @@ class Example
  	 * @return array
 	 */
 
-	public function delete()
+	public static function delete()
 	{
 		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
 
 		$where = [
 			'AND' => [
 				'account_id' => Spry::auth()->account_id,
+				'user_id' => Spry::auth()->user_id,
 				'id' => $id
 			]
 		];
 
-		return Spry::response(304, Spry::db()->delete($this->table, $where));
+		return Spry::response(304, Spry::db()->delete(self::$table, $where));
 	}
 
 }

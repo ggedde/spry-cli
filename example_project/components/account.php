@@ -6,7 +6,7 @@ use Spry\Spry as Spry;
 
 class Account
 {
-	private $table = 'accounts';
+	private static $table = 'accounts';
 
 	/**
 	 * Returns the Account
@@ -18,7 +18,7 @@ class Account
  	 * @return array
 	 */
 
-	public function get()
+	public static function get()
 	{
 		$where = [
 			'AND' => [
@@ -27,7 +27,7 @@ class Account
 			]
 		];
 
-		return Spry::response(400, Spry::db()->get($this->table, '*', $where));
+		return Spry::response(400, Spry::db()->get(self::$table, '*', $where));
 	}
 
 }

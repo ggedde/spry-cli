@@ -53,9 +53,8 @@ $config->db = [
 	'password' => '',
 	'charset' => 'utf8',
 	'port' => 3306,
-	'prefix' => 'api_x_', // Should change this to be someting Uniue
-	'migrate_destructive' => false,
-	'migrate_schema' => [
+	'prefix' => 'api_x_', // Should change this to be someting Unique
+	'schema' => [
 		'tables' => [
 			'users' => [
 				'columns' => [
@@ -73,27 +72,47 @@ $config->db = [
 
 // Routes
 $config->routes = [
-	// '/example/get' => 'Example::get',
-	// '/example/get_all' => 'Example::get_all',
-	// '/example/insert' => 'Example::insert',
-	// '/example/update' => 'Example::update',
-	// '/example/delete' => 'Example::delete'
+	// '/example/get' => [
+	// 	'label' => 'Get Example',
+	// 	'controller' => 'Example::get',
+	// 	'access' => 'public',
+	// ],
+	// '/example/get_all' => [
+	// 	'label' => 'Get All Examples',
+	// 	'controller' => 'Example::get_all',
+	// 	'access' => 'public',
+	// ],
+	// '/example/insert' => [
+	// 	'label' => 'Create Example',
+	// 	'controller' => 'Example::insert',
+	// 	'access' => 'public',
+	// ],
+	// '/example/update' => [
+	// 	'label' => 'Update Example',
+	// 	'controller' => 'Example::update',
+	// 	'access' => 'public',
+	// ],
+	// '/example/delete' => [
+	// 	'label' => 'Delete Example',
+	// 	'controller' => 'Example::delete',
+	// 	'access' => 'public',
+	// ],
 ];
 
 $config->response_codes = [
 
 	/* Auth */
-	2200 => ['en' => 'Authentication Passed Successfully'],
-	5200 => ['en' => 'Error: Invalid Username and Password'],
-	5201 => ['en' => 'Error: Account is Not Valid'],
-
-	2201 => ['en' => 'Successfully'],
-
-	2202 => ['en' => 'Successfully Created Request Token'],
-	5202 => ['en' => 'Error: Creating Request Token'],
-
-	2203 => ['en' => 'Successfully Granted Access'],
-	5203 => ['en' => 'Error: Creating Access Token'],
+	// 2200 => ['en' => 'Authentication Passed Successfully'],
+	// 5200 => ['en' => 'Error: Invalid Username and Password'],
+	// 5201 => ['en' => 'Error: Account is Not Valid'],
+	//
+	// 2201 => ['en' => 'Success'],
+	//
+	// 2202 => ['en' => 'Successfully Retrieved Available Permissions'],
+	// 5202 => ['en' => 'Error: Retrieving Available Permissions'],
+	//
+	// 2203 => ['en' => 'Successfully Granted Access'],
+	// 5203 => ['en' => 'Error: User does not have permission for that resource'],
 
 	/* Example */
 	// 2300 => ['en' => 'Successfully Retrieved Example'],
@@ -136,15 +155,36 @@ $config->tests = [
 	],
 ];
 
-// Filters
-$config->hooks->configure = ['Spry\\SpryProvider\\SpryLog::setup_php_logs'];
-$config->hooks->params = ['Spry\\SpryProvider\\SpryLog::initial_request'];
-// $config->hooks->database =  = ['AUTH::check'];
-// $config->hooks->routes = ['Spry\\SpryProvider\\SpryLog::user_request'];
-$config->hooks->stop = ['Spry\\SpryProvider\\SpryLog::stop_filter'];
-$config->hooks->build_response = ['Spry\\SpryProvider\\SpryLog::build_response_filter']; // Filters must return the $response
-// $config->hooks->send_response = []; // Filters must return the $response
-// $config->hooks->get_path = [];  // Filters must return the $path
-// $config->hooks->get_route = [];  // Filters must return the $route
-// $config->hooks->fetch_params = [];  // Filters must return the $params
-// $config->hooks->send_output = [];  // Filters must return the $output
+////////////////////////////////////////////////////////////////////////
+// HOOKS - called after various methods
+////////////////////////////////////////////////////////////////////////
+$config->hooks->configure = [
+	'Spry\\SpryProvider\\SpryLog::setup_php_logs'		// Called after the Config has been set.
+];
+
+$config->hooks->set_params = [
+	'Spry\\SpryProvider\\SpryLog::initial_request',		// Called after the Params have been set.
+	//'Spry\\SpryComponent\\Auth::set'
+];
+
+// $config->hooks->set_routes = [
+// 	'Spry\\SpryProvider\\SpryLog::user_request'			// Called after the Routes have been set.
+// ];
+
+// $config->hooks->database = []; 						// Called after the Database has been connected.
+
+$config->hooks->stop = [
+	'Spry\\SpryProvider\\SpryLog::stop'					// Called after any Stop response.
+];
+
+////////////////////////////////////////////////////////////////////////
+// FILTERS - called after various methods.  Must return (parameter).
+////////////////////////////////////////////////////////////////////////
+$config->filters->build_response = [
+	'Spry\\SpryProvider\\SpryLog::build_response_filter'	// Must return $response
+];
+// $config->filters->response = []; 						// Must return $response
+// $config->filters->get_path = [];  						// Must return $path
+// $config->filters->get_route = [];  						// Must return $route
+// $config->filters->params = [];  							// Must return $params
+// $config->filters->output = [];  							// Must return $output

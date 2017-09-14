@@ -6,12 +6,18 @@ use Spry\Spry as Spry;
 
 class Auth
 {
-	private $auth_fields = [
+
+	private static $table_users = 'users';
+	private static $table_accounts = 'accounts';
+
+	private static $auth_fields = [
 		'accounts.id(account_id)',
 		'users.id(user_id)',
 		'users.permissions(user_permissions)',
-		'users.access_key(user_access_key)'
+		'users.access_key(access_key)'
 	];
+
+
 
 	/**
 	 * Returns the Account ID and Access_key
@@ -23,91 +29,120 @@ class Auth
  	 * @return array
 	 */
 
-	public function get()
+	public static function login()
 	{
-		if(!empty(Spry::auth()->account_id) && !empty(Spry::auth()->user_id) && !empty(Spry::auth()->user_access_key))
-		{
-			$request = [
-				'account_id' => Spry::auth()->account_id,
-				'user_id' => Spry::auth()->user_id,
-				'access_key' => Spry::auth()->user_access_key,
-			];
+		$username = Spry::validator()->required()->minLength(1)->validate('username');
+		$password = Spry::validator()->required()->minLength(1)->validate('password');
 
-			return Spry::response(200, $request);
-		}
+		sleep(1); // Reduce Hack attempts
 
-		sleep(5); // Reduce Hack attempts
-		return Spry::response(200);
-	}
-
-
-
-
-
-	public function check()
-	{
-		// Skip this Check if request is by username and password
-		if(Spry::get_path() === '/auth/get/')
-		{
-			$username = Spry::validator()->required()->minLength(1)->validate('username');
-			$password = Spry::validator()->required()->minLength(1)->validate('password');
-
-			sleep(1); // Reduce Hack attempts
-
-			$where = [
-				'AND' => [
-					'users.username' => $username,
-					'users.password' => Spry::hash($password),
-					'accounts.status' => 'active'
-				]
-			];
-		}
-		else
-		{
-			// Run Auth Check
-			$access_key = Spry::validator()->required()->minLength(1)->validate('access_key');
-
-			$where = [
-				'AND' => [
-					'users.access_key' => $access_key,
-					'accounts.status' => 'active'
-				]
-			];
-		}
-
-		$join = [
-			"[>]users" => ["id" => "users.account_id"]
+		$where = [
+			'AND' => [
+				self::$table_users.'.username' => $username,
+				self::$table_users.'.password' => Spry::hash($password),
+				'accounts.status' => 'active'
+			]
 		];
 
-		$request = Spry::db()->get('accounts', $join, $this->auth_fields, $where);
+		$join = [
+			'[>]'.self::$table_users => ["id" => "account_id"]
+		];
 
-		if(!empty($request['account_id']))
+		$request = Spry::db()->get(self::$table_accounts, $join, self::$auth_fields, $where);
+
+		if(empty($request['user_id']))
 		{
-			$auth = (object) $request;
-			if($auth->user_permissions !== '*')
-			{
-				$auth->user_permissions = json_decode($auth->user_permissions, true);
-			}
-			Spry::set_auth($auth);
-			return true;
+			sleep(5); // Reduce Hack attempts
 		}
 
-		sleep(5); // Reduce Hack attempts
-		Spry::stop(5201);
+		return Spry::response(200, $request);
 	}
 
 
 
-	public function get_permissions()
+	/**
+	 * Checks the Account ID and Access_key
+	 * Sets the Auth object
+	 *
+ 	 * @param string $username
+ 	 * @param string $password
+ 	 *
+ 	 * @access 'public'
+ 	 * @return array
+	 */
+
+	 public static function set()
+ 	{
+ 		// Skip this Check if request is by username and password
+ 		if(Spry::get_path() === '/auth/login/')
+ 		{
+ 			return;
+ 		}
+
+ 		// Run Auth Check
+ 		$access_key = Spry::validator()->required()->minLength(1)->validate('access_key');
+
+ 		$where = [
+ 			'AND' => [
+ 				self::$table_users.'.access_key' => $access_key,
+ 				self::$table_accounts.'.status' => 'active'
+ 			]
+ 		];
+
+ 		$join = [
+ 			'[>]'.self::$table_users => ['id' => 'account_id']
+ 		];
+
+ 		$request = Spry::db()->get(self::$table_accounts, $join, self::$auth_fields, $where);
+
+ 		if(!empty($request['account_id']))
+ 		{
+ 			$auth = (object) $request;
+ 			if($auth->user_permissions !== '*')
+ 			{
+ 				$auth->user_permissions = array_map('trim', json_decode($auth->user_permissions, true));
+ 			}
+ 			Spry::set_auth($auth);
+ 			return true;
+ 		}
+
+ 		sleep(5); // Reduce Hack attempts
+ 		Spry::stop(5201);
+ 	}
+
+
+
+	/**
+	 * Returns the Available Persmissions by Routes for Users
+	 *
+	 * @access 'public'
+	 * @return array
+	 */
+
+	public static function get_available_permissions()
 	{
-		$permissions = array_keys(Spry::config()->routes);
+		$permissions = [];
 
-		return Spry::response(205, $permissions);
+		foreach (Spry::get_routes() as $route_path => $route)
+		{
+			$permissions[] = [
+				'label' => $route['label'],
+				'route' => $route_path
+			];
+		}
+
+		return Spry::response(202, $permissions);
 	}
 
 
+	/**
+	 * Checks if User has Permissions for the requested route
+	 *
+	 * @access 'public'
+	 * @return boolean
+	 */
 
-	public function has_permission($path='')
+	public static function has_permission($path='')
 	{
 		if(!$path)
 		{
@@ -119,30 +154,30 @@ class Auth
 			$permissions = Spry::auth()->user_permissions;
 		}
 
-		if(empty($permissions) || (!is_array($permissions) && $permissions !== '*') || (is_array($permissions) && !in_array($path, $permissions)))
+		if(!empty($permissions) && ($permissions === '*' || (is_array($permissions) && in_array(trim($path), $permissions))))
 		{
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 
 
-	public function check_permissions()
+	public static function guard()
 	{
 		$path = Spry::get_path();
 
 		// Skip this Check if request is by username and password
-		if($path === '/auth/get/')
+		if($path === '/auth/login/')
 		{
-			return;
+			return true;
 		}
 
-		if(!$this->has_permission($path))
+		if(!self::has_permission($path))
 		{
-			sleep(2); // Reduce Hack attempts
-			Spry::stop(5204);
+			sleep(5); // Reduce Hack attempts
+			Spry::stop(5203);
 		}
 	}
 
