@@ -42,6 +42,7 @@ if(!$config_file || ($config_file && !file_exists($config_file)))
 
 $config = new stdClass();
 $config->hooks = new stdClass();
+$config->filters = new stdClass();
 $config->db = new stdClass();
 require_once($config_file);
 

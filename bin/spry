@@ -11,6 +11,8 @@ else
    SPRY_DIR=$(dirname $BIN_DIR)/ggedde/spry-cli
 fi
 
+SPRY_DIR_EXISTS=""
+
 for arg in "$@"
 do
     if [ "$arg" == "version" ] || [ "$arg" == "v" ] || [ "$arg" == "-v" ] || [ "$arg" == "--version" ] || [ "$arg" == "-h" ] || [ "$arg" == "--help" ]
@@ -18,32 +20,46 @@ do
         echo "Spry-Cli -v $CLI_VERSION"
     fi
 
-    if [ "$1" == "init" ] || [ "$1" == "i" ]
+    if [ "$arg" == "init" ] || [ "$arg" == "i" ]
     then
         if [ -d 'spry' ]
         then
-            echo 'The folder "spry" already exists.'
-            exit
+            SPRY_DIR_EXISTS="true"
+            printf "The folder 'spry' already exists \e[91mignoring\e[0m."
+            echo ''
+        else
+            cp -r $SPRY_DIR/example_project spry
         fi
-        cp -r $SPRY_DIR/example_project spry
+        
 
         if [ $2 ] && [ "$2" != "" ]
         then
+
+            if [ "$SPRY_DIR_EXISTS" == "" ]
+            then
+                php $SPRY_DIR/src/SpryCli.php "$@"
+            fi
+
             if [ -d $2 ]
             then
-                echo "The public folder '$2' already exists."
-                exit
-            fi
-            mkdir $2
-            echo "<?php
+                printf "The folder '$2' already exists \e[91mignoring\e[0m."
+                echo ''
+            else
+                mkdir $2
+                echo "<?php
 
 include dirname(__DIR__).'/vendor/autoload.php';
 include dirname(__DIR__).'/spry/init.php';
 
 " >> "$2/index.php";
 
-            php $SPRY_DIR/src/SpryCli.php "$@"
+                echo "Folder '$2' created."
+                echo "File '$2/index.php' created."
+
+            fi
+
             echo ''
+            exit
 
         fi
     fi
@@ -72,7 +88,7 @@ include dirname(__DIR__).'/spry/init.php';
                 exit
             else
                 printf "\e[31;4mERROR:\e[0m Spry Server Could not find vendor/autoload.php or spry/init.php\nMake sure you run 'spry up' in your root Project directory that contains both vendor/autoload.php and spry/init.php\nOr run it with your endpoint folder 'spry up {public_dir}' that contains your index.php file."
-                echo ""
+                echo ''
                 exit
             fi
         fi
