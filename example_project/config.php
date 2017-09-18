@@ -155,6 +155,13 @@ $config->tests = [
 	],
 ];
 
+// Default Response Headers
+$config->default_response_headers = [
+	'Access-Control-Allow-Origin: *',
+	'Access-Control-Allow-Methods: GET, POST, OPTIONS',
+	'Access-Control-Allow-Headers: X-Requested-With, content-type'
+];
+
 ////////////////////////////////////////////////////////////////////////
 // HOOKS - called after various methods
 ////////////////////////////////////////////////////////////////////////
