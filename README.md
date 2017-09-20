@@ -1,7 +1,7 @@
 # SpryCli
 Command Line Interface for Spry
 
-## Installation
+# Installation
 
 ```
 composer global require ggedde/spry-cli
@@ -22,21 +22,22 @@ REQUIRES:
 
 	spry clear logs
 	
-### **component** | **c** [*component*]  
-<sub>Generate a new Component and add it to your component directory in psr-4 format</sub>  
+## **component** | **c** <sub><sup>[*component*]</sup></sub>
+Generate a new Component and add it to your component directory in psr-4 format
 
-<sub>*examples:*</sub>
+*examples:*
 	
 	spry component SalesReps
 
-###**hash** | **h** [*value*]  
-<sub>Hash a value that processes it using the salt in the config file.</sub>  
-<sub>*examples:*</sub>
+## **hash** <sub><sup>|</sup></sub> **h** <sub><sup>[*value*]</sup></sub>
+Hash a value that processes it using the salt in the config file.
+
+*examples:*
 	  
 	spry hash "something to hash 123"
 
 ### **help** | **-h** | **--help**  
-<sub>Display Information about Spry-cli.</sub>
+Display Information about Spry-cli.
 
 ### **init** | **i** [*public_folder*]  
 <sup>Initiate a Spry Setup and Configuration with a default project setup. </sup>
