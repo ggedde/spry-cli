@@ -1,7 +1,9 @@
 # SpryCli
 Command Line Interface for Spry
 
-Current Release: https://github.com/ggedde/spry-cli/releases/tag/0.9.12
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)]()
+
+Current Release: https://github.com/ggedde/spry-cli/releases/latest
 
 REQUIRES:
 * PHP 5.4
