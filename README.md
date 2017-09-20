@@ -30,7 +30,7 @@ Generate a new Component and add it to your component directory in psr-4 format
 	spry component SalesReps
 
 ## **hash** &nbsp;<sub><sup>|</sup></sub>&nbsp; **h** &nbsp; <sub><sup>[*value*]</sup></sub>
-Hash a value that processes it using the salt in the config file.
+Hash a value that processes it using the salt in the configuration.
 
 ###### *Examples:*
 	  
