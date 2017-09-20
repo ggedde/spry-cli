@@ -16,7 +16,7 @@ REQUIRES:
 ## **clear** <sub><sup>[*object*]</sup></sub>
 
 ###### Objects:
-- logs - <sub><sup>clears both API and PHP log files. Does not remove archived logs.</sup></sub>
+ - *logs* - clears both API and PHP log files. Does not remove archived logs.
 
 <sub>*examples:*</sub>
 
@@ -36,10 +36,10 @@ Hash a value that processes it using the salt in the config file.
 	  
 	spry hash "something to hash 123"
 
-### **help** | **-h** | **--help**  
+## **help** <sub><sup>|</sup></sub> **-h** <sub><sup>|</sup></sub> **--help**  
 Display Information about Spry-cli.
 
-### **init** | **i** [*public_folder*]  
+## **init** | **i** <sub><sup> [*public_folder*]</sup></sub>
 <sup>Initiate a Spry Setup and Configuration with a default project setup. </sup>
 <sup>[public_folder] *(optional)* -  creates a folder of that name and adds a index.php pointer file</sup>
   
@@ -48,7 +48,7 @@ Display Information about Spry-cli.
 	  spry init
 	  spry init public_html
 
-### **migrate** | **m** [*options*]  
+## **migrate** | **m** <sub><sup> [*options*]</sup></sub>
 <sup>Migrate the Database Schema.</sup>  
 ###### Options:
   - *--dryrun* - <sub><sup>Only check for what will be migrated and report back. No actions will be taken.</sup></sub>
@@ -60,7 +60,7 @@ Display Information about Spry-cli.
 	  spry migrate --dryrun
 	  spry migrate --destructive
 	  
-### **test** | **t** [*test*] [*options*]  
+## **test** | **t** <sub><sup> [*test*] [*options*]</sup></sub>
 <sup>Run a Test or all Tests if a Test name is not specified.
  [*test*] - Name of a Test in configuration or json test data.  Leave out to run all tests in configuration.</sup>
 ###### Options:
@@ -74,5 +74,5 @@ Display Information about Spry-cli.
 	  spry test test_123 --verbose --repeat 4
 	  spry test '{"route":"/example/add", "params":{"name":"test"}, "expect":{"response_code": 2000}}'
 
-### **version** | **v** | **-v** | **--version**  
+## **version** | **v** | **-v** | **--version**  
 <sup>Display the Version of the Spry Instalation.</sup>
