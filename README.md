@@ -23,15 +23,12 @@ or
 
 	source ~/.bashrc
 	
-Now check to make sure it is working.
 
-	spry version
-
-NOTE:  You will get an Error or Warning if running it outside of a project folder.  This is normal.
 
 To create a new project run
 
-	spry init
+	spry new [project_name]
+	cd [project_name]
 	
 To Start the Test server run
 
@@ -101,6 +98,15 @@ Migrate the Database Schema.
 	  spry migrate
 	  spry migrate --dryrun
 	  spry migrate --destructive
+	  
+## **new** &nbsp;<sub><sup>|</sup></sub>&nbsp; **n** &nbsp;<sub><sup>[*project*]</sup></sub>
+Create a new project/directory and initiate it.
+
+[*project*] -  Name of project/directory to create and initialize.
+  
+###### *Examples:*
+	  
+	  spry new project_name
 	  
 ## **test** &nbsp;<sub><sup>|</sup></sub>&nbsp; **t** &nbsp;<sub><sup>[*test*] &nbsp;[*--options*]</sup></sub>
 Run a Test or all Tests if a Test name is not specified.
