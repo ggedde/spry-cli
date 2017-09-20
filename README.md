@@ -88,3 +88,10 @@ Display the Version of the Spry Instalation.
 ###### *Examples:*
 	  
 	  spry version
+
+## **up** &nbsp;<sub><sup>|</sup></sub>&nbsp; **u**
+Start the built in PHP Spry Server.
+
+###### *Examples:*
+	  
+	  spry up
