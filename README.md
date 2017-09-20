@@ -15,22 +15,27 @@ REQUIRES:
 
 ## **clear** &nbsp; <sub><sup>[*object*]</sup></sub>
 
-###### *Objects:*
- - *logs* - clears both API and PHP log files. Does not remove archived logs.
+[*object*] - Object name. Currently only supports 'logs'.
+- *logs* - clears both API and PHP log files. Does not remove archived logs.
 
 ###### *Examples:*
 
 	spry clear logs
 	
 ## **component** &nbsp;<sub><sup>|</sup></sub>&nbsp; **c** &nbsp; <sub><sup>[*component*]</sup></sub>
-Generate a new Component and add it to your component directory in psr-4 format
+Generate a new Component and add it to your component directory.
+
+[*component*] - Name of component to create. Name will be parsed into psr-4 format.
 
 ###### *Examples:*
 	
+	spry component sales_reps
 	spry component SalesReps
 
 ## **hash** &nbsp;<sub><sup>|</sup></sub>&nbsp; **h** &nbsp; <sub><sup>[*value*]</sup></sub>
 Hash a value that processes it using the salt in the configuration.
+
+[*value*] - Value to be processes.  Wrap with quotes when including spaces.
 
 ###### *Examples:*
 	  
@@ -46,16 +51,14 @@ Display Information about Spry-cli.
 ## **init** &nbsp;<sub><sup>|</sup></sub>&nbsp; **i** &nbsp; <sub><sup>[*public_folder*]</sup></sub>
 Initiate a Spry Setup and Configuration with a default project setup.
 
-[*public_folder*]
-
-*(optional)* -  creates a folder of that name and adds a index.php pointer file
+[*public_folder*] - *(optional)* -  creates a folder of that name and adds a index.php pointer file
 
 ###### *Examples:*
 	  
 	  spry init
 	  spry init public_html
 
-## **migrate** &nbsp;<sub><sup>|</sup></sub>&nbsp; **m** &nbsp;<sub><sup>[*options*]</sup></sub>
+## **migrate** &nbsp;<sub><sup>|</sup></sub>&nbsp; **m** &nbsp;<sub><sup>[*--options*]</sup></sub>
 Migrate the Database Schema.
 
 ###### *Options:*
@@ -68,10 +71,10 @@ Migrate the Database Schema.
 	  spry migrate --dryrun
 	  spry migrate --destructive
 	  
-## **test** &nbsp;<sub><sup>|</sup></sub>&nbsp; **t** &nbsp;<sub><sup>[*test*] &nbsp;[*options*]</sup></sub>
+## **test** &nbsp;<sub><sup>|</sup></sub>&nbsp; **t** &nbsp;<sub><sup>[*test*] &nbsp;[*--options*]</sup></sub>
 Run a Test or all Tests if a Test name is not specified.
 
-[*test*] - Name of a Test in configuration or json test data.  Leave out to run all tests in configuration.
+[*test*] - *(optional)* - Name of a Test in configuration or json test data.  Leave out to run all tests in configuration.
 
 ###### *Options:*
   - *--verbose* - List out full details of the Test(s).
