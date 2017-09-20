@@ -46,7 +46,8 @@ Display Information about Spry-cli.
 ## **init** &nbsp;<sub><sup>|</sup></sub>&nbsp; **i** &nbsp; <sub><sup>[*public_folder*]</sup></sub>
 Initiate a Spry Setup and Configuration with a default project setup.
 
-[public_folder] *(optional)* -  creates a folder of that name and adds a index.php pointer file
+###### [*public_folder*]
+*(optional)* -  creates a folder of that name and adds a index.php pointer file
 
 ###### *Examples:*
 	  
@@ -69,7 +70,8 @@ Migrate the Database Schema.
 ## **test** &nbsp;<sub><sup>|</sup></sub>&nbsp; **t** &nbsp;<sub><sup>[*test*] &nbsp;[*options*]</sup></sub>
 Run a Test or all Tests if a Test name is not specified.
 
-[*test*] - Name of a Test in configuration or json test data.  Leave out to run all tests in configuration.
+###### [*test*]
+Name of a Test in configuration or json test data.  Leave out to run all tests in configuration.
 
 ###### *Options:*
   - *--verbose* - List out full details of the Test(s).
