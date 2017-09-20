@@ -25,7 +25,7 @@ or
 	
 
 
-To create a new project run
+## Create a project
 
 	spry new [project_name]
 	cd [project_name]
