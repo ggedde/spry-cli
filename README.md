@@ -17,17 +17,17 @@ REQUIRES:
 
 ###### Objects:
 - logs - <sub><sup>clears both API and PHP log files. Does not remove archived logs.</sup></sub>
-
+###### <sub>examples:</sub>
+	spry clear logs
+	
 **component** | **c** [*component*]  
 <sub>Generate a new Component and add it to your component directory in psr-4 format</sub>
-
-	examples:
-	  spry component SalesReps
+###### <sub>examples:</sub>
+	spry component SalesReps
 
 **hash** | **h** [*value*]  
 <sub>Hash a value that processes it using the salt in the config file.</sub>
-
-	examples:
+###### <sub>examples:</sub>
 	  spry hash "something to hash 123"
 
 **help** | **-h** | **--help**  
