@@ -13,8 +13,9 @@ REQUIRES:
 
 ## List of Commands and arguments:
 
-**clear** [object]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(clears both API and PHP log files. Does not remove archived logs.)*
++ **clear** [object]
+
+*(clears both API and PHP log files. Does not remove archived logs.)*
 
 **component** | **c** [component]
 
