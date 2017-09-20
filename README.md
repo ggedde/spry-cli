@@ -14,24 +14,25 @@ REQUIRES:
 ## List of Commands and arguments:
 
 **clear** [object]
-
-&nbsp;&nbsp;&nbsp;logs    *(clears both API and PHP log files. Does not remove archived logs.)*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(clears both API and PHP log files. Does not remove archived logs.)*
 
 **component** | **c** [component]
 
-&nbsp;&nbsp;&nbsp;*Generate a new Component and add it to your component directory.*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Generate a new Component and add it to your component directory.*
 
-&nbsp;&nbsp;&nbsp;ex.
-&nbsp;&nbsp;&nbsp;`spry component sales_reps`    (component classes will follow psr-4 format. ie SalesReps)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`spry component sales_reps`    (component classes will follow psr-4 format. ie SalesReps)
 
 **hash** | **h** [value]
 
-&nbsp;&nbsp;&nbsp;Hash a value that procedes it using the salt in the config file.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hash a value that procedes it using the salt in the config file.
 
-&nbsp;&nbsp;&nbsp;ex.
-&nbsp;&nbsp;&nbsp;`spry hash "something to hash 123"`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`spry hash "something to hash 123"`
 
-help | -h | --help            - Display Information about Spry-cli.
+**help** | **-h** | **--help**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Display Information about Spry-cli.*
 
 init | i                      - Initiate a Spry Setup and Configuration with default project.
   ex.     spry init
