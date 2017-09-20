@@ -45,6 +45,7 @@ Display Information about Spry-cli.
 
 ## **init** &nbsp;<sub><sup>|</sup></sub>&nbsp; **i** &nbsp; <sub><sup>[*public_folder*]</sup></sub>
 Initiate a Spry Setup and Configuration with a default project setup.
+
 [public_folder] *(optional)* -  creates a folder of that name and adds a index.php pointer file
   
 ###### *Examples:*
@@ -52,11 +53,11 @@ Initiate a Spry Setup and Configuration with a default project setup.
 	  spry init
 	  spry init public_html
 
-## **migrate** &nbsp;<sub><sup>|</sup></sub>&nbsp; **m** &nbsp;<sub><sup>[*options*]</sup></sub>
+## **migrate** &nbsp;<sub><sup>|</sup></sub>&nbsp; **m** &nbsp;<sup>[*options*]</sup>
 Migrate the Database Schema.
 ###### *Options:*
   - *--dryrun* - Only check for what will be migrated and report back. No actions will be taken.
-  - *--destructive* - <sub><sup>Delete Fields, Tables and other data that does not match the new Scheme.</sup></sub>
+  - *--destructive* - Delete Fields, Tables and other data that does not match the new Scheme.
   
 ###### *Examples:*
 	  
@@ -64,12 +65,13 @@ Migrate the Database Schema.
 	  spry migrate --dryrun
 	  spry migrate --destructive
 	  
-## **test** &nbsp;<sub><sup>|</sup></sub>&nbsp; **t** &nbsp;<sub><sup>[*test*] [*options*]</sup></sub>
+## **test** &nbsp;<sub><sup>|</sup></sub>&nbsp; **t** &nbsp;<sub>[*test*] [*options*]</sub>
 Run a Test or all Tests if a Test name is not specified.
+
 [*test*] - Name of a Test in configuration or json test data.  Leave out to run all tests in configuration.
-###### Options:
-  - *--verbose* - List out full details of the Test(s).
-  - *--repeat* - <sub><sup>Repeat the test(s) a number of times.</sup></sub>
+###### *Options:*
+  - --verbose - *List out full details of the Test(s).*
+  - --repeat - *Repeat the test(s) a number of times.*
 		
 ###### *Examples:*   
 
