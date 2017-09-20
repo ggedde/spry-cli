@@ -13,16 +13,29 @@ REQUIRES:
 
 ## List of Commands and arguments:
 
-clear                         - Clears specific objects. Currently only supports 'logs'.
-  ex.     spry clear logs    (clears both API and PHP log files. Does not remove archived logs.)
+**clear** [object]
 
-component | c                 - Generate a new Component and add it to your component directory.
-  ex.     spry component sales_reps    (component classes will follow psr-4 format. ie SalesReps)
+- logs *(clears both API and PHP log files. Does not remove archived logs.)*
 
 
-hash | h                      - Hash a value that procedes it using the salt in the config file.
-  ex.     spry hash something_to_hash_123
-  ex.     spry hash "hash with spaces 123"
+
+
+**component** | **c** [component]
+
+*Generate a new Component and add it to your component directory.*
+
+ex.
+`spry component sales_reps`    (component classes will follow psr-4 format. ie SalesReps)
+
+
+
+
+**hash** | **h** [value]
+
+Hash a value that procedes it using the salt in the config file.
+
+ex.
+`spry hash "something to hash 123"`
 
 help | -h | --help            - Display Information about Spry-cli.
 
