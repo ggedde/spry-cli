@@ -7,6 +7,23 @@ Command Line Interface for Spry
 composer global require ggedde/spry-cli
 ```
 
+You also need to make sure you have the global composer bin available in your ~/.bash_profile or ~/.bashrc depending on what OS your using.
+
+Edit one of those files and check to see if this exists.  If not then add it to the bottome of the file.
+	
+	export PATH="$PATH:$HOME/.composer/vendor/bin"
+	
+You may have to close and reopen your terminal or you can run
+
+	source ~/.bashrc
+or
+
+	source ~/.bash_profile
+	
+Check to make sure it is running.
+
+	spry version
+
 REQUIRES:
 * PHP 5.4+
 
