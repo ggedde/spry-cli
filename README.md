@@ -13,7 +13,7 @@ REQUIRES:
 
 # List of Commands and arguments:
 
-### **clear** [*object*]
+## **clear** <sub><sup>[*object*]</sup></sub>
 
 ###### Objects:
 - logs - <sub><sup>clears both API and PHP log files. Does not remove archived logs.</sup></sub>
