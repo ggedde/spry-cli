@@ -35,7 +35,7 @@ Generate a new Component and add it to your component directory.
 ## **hash** &nbsp;<sub><sup>|</sup></sub>&nbsp; **h** &nbsp; <sub><sup>[*value*]</sup></sub>
 Hash a value that processes it using the salt in the configuration.
 
-[*value*] - Value to be processes.  Wrap with quotes when including spaces.
+[*value*] - Value to be hashed.  Wrap with quotes when including spaces.
 
 ###### *Examples:*
 	  
@@ -84,7 +84,7 @@ Run a Test or all Tests if a Test name is not specified.
 
 	  spry test
 	  spry test --verbose
-	  spry test test_123 --verbose --repeat 4
+	  spry test connection --verbose --repeat 4
 	  spry test '{"route":"/example/add", "params":{"name":"test"}, "expect":{"response_code": 2000}}'
 
 ## **version** &nbsp;<sub><sup>|</sup></sub>&nbsp; **v** &nbsp;<sub><sup>|</sup></sub>&nbsp; **-v** &nbsp;<sub><sup>|</sup></sub>&nbsp; **--version**  
