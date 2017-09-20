@@ -20,17 +20,74 @@ do
         echo "Spry-Cli -v $CLI_VERSION"
     fi
 
-    if [ "$arg" == "init" ] || [ "$arg" == "i" ]
+    if [ "$1" == "new" ] || [ "$1" == "n" ]
     then
+
+        if [ $2 ] && [ "$2" != "" ]
+        then
+
+            if [ -d $2 ]
+            then
+
+                printf "\e[31;4mERROR:\e[0m directory '$2' already exists."
+                echo ''
+                exit
+
+            fi
+
+            mkdir $2
+
+            if [ ! -d $2 ]
+            then
+
+                printf "\e[31;4mERROR:\e[0m Error creating directory '$2'."
+                echo ''
+                exit
+
+            fi
+
+            cd $2
+
+            $BIN_DIR/spry init public
+
+            exit
+
+        else
+
+            printf "\e[31;4mERROR:\e[0m Missing project name."
+            echo ''
+            exit
+
+        fi
+
+    fi
+
+    if [ "$1" == "init" ] || [ "$1" == "i" ]
+    then
+
         if [ -d 'spry' ]
         then
             SPRY_DIR_EXISTS="true"
             printf "The folder 'spry' already exists \e[91mignoring\e[0m."
             echo ''
+
+            if [ ! $2 ] || [ "$2" == "" ]
+            then
+
+                exit
+                
+            fi
+
         else
             cp -r $SPRY_DIR/example_project spry
         fi
-        
+
+        if [ ! -f 'composer.json' ]
+        then
+            echo 'Downloading Composer Packages...'
+            composer require ggedde/spry
+        fi
+
 
         if [ $2 ] && [ "$2" != "" ]
         then
@@ -66,23 +123,31 @@ include dirname(__DIR__).'/spry/init.php';
 
     if [ "$1" == "up" ] || [ "$1" == "u" ]
     then
-        if [ "$2" != "" ] && [ -d $2 ]
+
+        PORT=8000
+
+        if [ $2 ] && [ "$2" != "" ]
+        then
+            PORT=$2
+        fi
+
+        if [ $3 ] && [ "$3" != "" ] && [ -d $3 ]
         then
             echo ''
             php $SPRY_DIR/src/SpryCli.php "$@"
-            php -S localhost:8000 -t $2 &>/dev/null
+            php -S localhost:$PORT -t $3 &>/dev/null
             echo ''
             echo 'Spry Server Closed.'
             exit
         fi
 
-        if [ ! $2 ] || [ $2 == "" ]
+        if [ ! $3 ] || [ $3 == "" ]
         then
             if [ -f "$PWD/vendor/autoload.php" ] && [ -f "$PWD/spry/init.php" ]
             then
                 echo ''
                 php $SPRY_DIR/src/SpryCli.php "$@"
-                php -S localhost:8000 $SPRY_DIR/server/up.php &>/dev/null
+                php -S localhost:$PORT $SPRY_DIR/server/up.php &>/dev/null
                 echo ''
                 echo 'Spry Server Closed.'
                 exit

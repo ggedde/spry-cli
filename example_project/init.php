@@ -2,4 +2,5 @@
 
 namespace Spry;
 
-Spry::run(__DIR__.'/config.php');
+define('SPRY_DIR', __DIR__);
+Spry::run(SPRY_DIR.'/config.php');
