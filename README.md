@@ -1,6 +1,9 @@
 # SpryCli
 Command Line Interface for Spry
 
+REQUIRES:
+* PHP 5.4+
+
 # Installation
 
 ```
@@ -15,18 +18,29 @@ Edit one of those files and check to see if this exists.  If not then add it to 
 	
 You may have to close and reopen your terminal or you can run
 
-	source ~/.bashrc
+	source ~/.bash_profile
 or
 
-	source ~/.bash_profile
+	source ~/.bashrc
 	
-Check to make sure it is running.
+Now check to make sure it is working.
 
 	spry version
 
-REQUIRES:
-* PHP 5.4+
+NOTE:  You will get an Error or Warning if running it outside of a project folder.  This is normal.
 
+To create a new project run
+
+	spry init
+	
+To Start the Test server run
+
+	spry up
+	
+Then open another termal and run a test
+
+	spry test
+	
 
 # List of Commands and arguments:
 
