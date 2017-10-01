@@ -75,27 +75,32 @@ $config->routes = [
 	// '/example/get' => [
 	// 	'label' => 'Get Example',
 	// 	'controller' => 'Example::get',
-	// 	'access' => 'public',
+	// 	'public' => true,
+	// 	'active' => true,
 	// ],
 	// '/example/get_all' => [
 	// 	'label' => 'Get All Examples',
 	// 	'controller' => 'Example::get_all',
-	// 	'access' => 'public',
+	// 	'public' => true,
+	// 	'active' => true,
 	// ],
 	// '/example/insert' => [
 	// 	'label' => 'Create Example',
 	// 	'controller' => 'Example::insert',
-	// 	'access' => 'public',
+	// 	'public' => true,
+	// 	'active' => true,
 	// ],
 	// '/example/update' => [
 	// 	'label' => 'Update Example',
 	// 	'controller' => 'Example::update',
-	// 	'access' => 'public',
+	// 	'public' => true,
+	// 	'active' => true,
 	// ],
 	// '/example/delete' => [
 	// 	'label' => 'Delete Example',
 	// 	'controller' => 'Example::delete',
-	// 	'access' => 'public',
+	// 	'public' => true,
+	// 	'active' => true,
 	// ],
 ];
 
