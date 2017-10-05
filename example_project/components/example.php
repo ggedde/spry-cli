@@ -2,7 +2,7 @@
 
 namespace Spry\SpryComponent;
 
-use Spry\Spry as Spry;
+use Spry\Spry;
 
 class Example
 {
@@ -38,7 +38,7 @@ class Example
 			]
 		];
 
-		return Spry::response(300, Spry::db()->get(self::$table, '*', $where));
+		return Spry::response(000, Spry::db()->get(self::$table, '*', $where));
 	}
 
 
@@ -63,7 +63,7 @@ class Example
 			'GROUP' => 'id'
 		];
 
-		return Spry::response(301, Spry::db()->select(self::$table, '*', $where));
+		return Spry::response(000, Spry::db()->select(self::$table, '*', $where));
 	}
 
 
@@ -88,7 +88,8 @@ class Example
 			'name' => $name
 		];
 
-		return Spry::response(302, Spry::db()->insert(self::$table, $data));
+		$response = Spry::db()->insert(self::$table, $data)->rowCount() ? ['id' => Spry::db()->id()] : null;
+		return Spry::response(000, $response);
 	}
 
 
@@ -121,7 +122,9 @@ class Example
 			]
 		];
 
-		return Spry::response(303, Spry::db()->update(self::$table, $data, $where));
+		$response = Spry::db()->update(self::$table, $data, $where)->rowCount() ? ['id' => $id] : null;
+		return Spry::response(000, $response);
+
 	}
 
 
@@ -148,7 +151,8 @@ class Example
 			]
 		];
 
-		return Spry::response(304, Spry::db()->delete(self::$table, $where));
+		$response = Spry::db()->delete(self::$table, $where)->rowCount() ? 1 : null;
+		return Spry::response(000, $response);
 	}
 
 }
