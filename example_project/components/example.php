@@ -59,7 +59,9 @@ class Example
 				'account_id' => Spry::auth()->account_id,
 				'user_id' => Spry::auth()->user_id,
 			],
-			'ORDER' => 'id DESC',
+			'ORDER' => [
+				'id' => 'DESC'
+			],
 			'GROUP' => 'id'
 		];
 
