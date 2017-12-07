@@ -147,7 +147,7 @@ $config->tests = [
 		'route' => '/testconnection',
 		'params' => [],
 		'expect' => [
-			'response_code' => 5010,
+			'code' => 5010,
 		]
 	],
 	'connection2' => [
@@ -155,13 +155,13 @@ $config->tests = [
 		'route' => '/testconnection',
 		'params' => ['test' => 123],
 		'expect' => [
-			'response_code' => 5011,
+			'code' => 5011,
 		]
 	],
 ];
 
-// Default Response Headers
-$config->default_response_headers = [
+// Response Headers
+$config->response_headers = [
 	'Access-Control-Allow-Origin: *',
 	'Access-Control-Allow-Methods: GET, POST, OPTIONS',
 	'Access-Control-Allow-Headers: X-Requested-With, content-type'
@@ -171,7 +171,8 @@ $config->default_response_headers = [
 // HOOKS - called after various methods
 ////////////////////////////////////////////////////////////////////////
 $config->hooks->configure = [
-	'Spry\\SpryProvider\\SpryLog::setup_php_logs'		// Called after the Config has been set.
+	'Spry\\SpryProvider\\SpryLog::setup_php_logs',		// Called after the Config has been set.
+	'Spry\\SpryProvider\\SpryWebTools::WebTools'		// Display Webtools if configured.
 ];
 
 $config->hooks->set_params = [
@@ -180,7 +181,7 @@ $config->hooks->set_params = [
 ];
 
 // $config->hooks->set_routes = [
-// 	'Spry\\SpryProvider\\SpryLog::user_request'			// Called after the Routes have been set.
+// 	'Spry\\SpryProvider\\SpryLog::user_request'
 // ];
 
 // $config->hooks->database = []; 						// Called after the Database has been connected.

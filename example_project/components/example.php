@@ -32,8 +32,8 @@ class Example
 
 		$where = [
 			'AND' => [
-				'account_id' => Spry::auth()->account_id,
-				'user_id' => Spry::auth()->user_id,
+				// 'account_id' => Spry::auth()->account_id,
+				// 'user_id' => Spry::auth()->user_id,
 				'id' => $id
 			]
 		];
@@ -55,10 +55,10 @@ class Example
 	public static function get_all()
 	{
 		$where = [
-			'AND' => [
-				'account_id' => Spry::auth()->account_id,
-				'user_id' => Spry::auth()->user_id,
-			],
+			// 'AND' => [
+			// 	'account_id' => Spry::auth()->account_id,
+			// 	'user_id' => Spry::auth()->user_id,
+			// ],
 			'ORDER' => [
 				'id' => 'DESC'
 			],
@@ -85,12 +85,12 @@ class Example
 		$name = Spry::validator()->required()->minLength(1)->validate('name');
 
 		$data = [
-			'account_id' => Spry::auth()->account_id,
-			'user_id' => Spry::auth()->user_id,
+			// 'account_id' => Spry::auth()->account_id,
+			// 'user_id' => Spry::auth()->user_id,
 			'name' => $name
 		];
 
-		$response = Spry::db()->insert(self::$table, $data)->rowCount() ? ['id' => Spry::db()->id()] : null;
+		$response = Spry::db()->insert(self::$table, $data) ? ['id' => Spry::db()->id()] : null;
 		return Spry::response(000, $response);
 	}
 
@@ -118,13 +118,13 @@ class Example
 
 		$where = [
 			'AND' => [
-				'account_id' => Spry::auth()->account_id,
-				'user_id' => Spry::auth()->user_id,
+				// 'account_id' => Spry::auth()->account_id,
+				// 'user_id' => Spry::auth()->user_id,
 				'id' => $id
 			]
 		];
 
-		$response = Spry::db()->update(self::$table, $data, $where)->rowCount() ? ['id' => $id] : null;
+		$response = Spry::db()->update(self::$table, $data, $where) ? ['id' => $id] : null;
 		return Spry::response(000, $response);
 
 	}
@@ -147,13 +147,13 @@ class Example
 
 		$where = [
 			'AND' => [
-				'account_id' => Spry::auth()->account_id,
-				'user_id' => Spry::auth()->user_id,
+				// 'account_id' => Spry::auth()->account_id,
+				// 'user_id' => Spry::auth()->user_id,
 				'id' => $id
 			]
 		];
 
-		$response = Spry::db()->delete(self::$table, $where)->rowCount() ? 1 : null;
+		$response = Spry::db()->delete(self::$table, $where) ? 1 : null;
 		return Spry::response(000, $response);
 	}
 
