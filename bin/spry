@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLI_VERSION="0.9.6"
+CLI_VERSION="0.9.7"
 
 BIN_DIR=$(dirname $0)
 
@@ -75,7 +75,7 @@ do
             then
 
                 exit
-                
+
             fi
 
         else
