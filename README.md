@@ -106,8 +106,8 @@ Display Contents of log files by type.
 Migrate the Database Schema.
 
 ###### *Options:*
-  - *--dryrun &nbsp; | -d* &nbsp; - Only check for what will be migrated and report back. No actions will be taken.
-  - *--force &nbsp; &nbsp; | -f* &nbsp; - (Destructive) Delete Fields, Tables and other data that does not match the new Scheme.
+  - *--dryrun &nbsp; | &nbsp;-d* &nbsp; - Only check for what will be migrated and report back. No actions will be taken.
+  - *--force &nbsp; &nbsp; | &nbsp;-f* &nbsp; - (Destructive) Delete Fields, Tables and other data that does not match the new Scheme.
 
 ###### *Examples:*
 
