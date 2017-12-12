@@ -106,14 +106,14 @@ Display Contents of log files by type.
 Migrate the Database Schema.
 
 ###### *Options:*
-  - *--dryrun* - Only check for what will be migrated and report back. No actions will be taken.
-  - *--destructive* - Delete Fields, Tables and other data that does not match the new Scheme.
+  - *--dryrun &nbsp; | -d* - Only check for what will be migrated and report back. No actions will be taken.
+  - *--force &nbsp; &nbsp;| -f* - (Destructive) Delete Fields, Tables and other data that does not match the new Scheme.
 
 ###### *Examples:*
 
 	  spry migrate
 	  spry migrate --dryrun
-	  spry migrate --destructive
+	  spry migrate --force
 
 ## **new** &nbsp;<sub><sup>|</sup></sub>&nbsp; **n** &nbsp;<sub><sup>[*project*]</sup></sub>
 Create a new project/directory and initiate it.
