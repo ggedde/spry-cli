@@ -3,6 +3,7 @@
 namespace Spry\SpryComponent;
 
 use Spry\Spry;
+use Spry\SpryUtilities;
 
 class Example
 {
@@ -16,27 +17,19 @@ class Example
 
 
 	/**
-	 * Returns a Single Item by Account
+	 * Returns a single Example
 	 *
- 	 * @param string $access_key
+ 	 * @param array $params
  	 * @param int $id
  	 *
  	 * @access 'public'
  	 * @return array
 	 */
 
-	public static function get()
+	public static function get($params=[])
 	{
-		// Required Fields
-		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
-
-		$where = [
-			'AND' => [
-				// 'account_id' => Spry::auth()->account_id,
-				// 'user_id' => Spry::auth()->user_id,
-				'id' => $id
-			]
-		];
+		// Use Params from route as where statemnt
+		$where = $params;
 
 		return Spry::response(000, Spry::db()->get(self::$table, '*', $where));
 	}
@@ -44,26 +37,25 @@ class Example
 
 
 	/**
-	 * Returns all Items by Account
+	 * Returns all Examples
 	 *
- 	 * @param string $access_key
+ 	 * @param array $params
  	 *
  	 * @access 'public'
  	 * @return array
 	 */
 
-	public static function get_all()
+	public static function get_all($params=[])
 	{
-		$where = [
-			// 'AND' => [
-			// 	'account_id' => Spry::auth()->account_id,
-			// 	'user_id' => Spry::auth()->user_id,
-			// ],
-			'ORDER' => [
-				'id' => 'DESC'
-			],
-			'GROUP' => 'id'
-		];
+		// Use Params from route as where statemnt
+		$where = $params;
+
+		// Set Possible Order Columns
+		$where['ORDER'] = SpryUtilities::dbGetOrder([
+			self::$table.'.id',
+			self::$table.'.updated_at',
+			self::$table.'.created_at',
+		]);
 
 		return Spry::response(000, Spry::db()->select(self::$table, '*', $where));
 	}
@@ -71,25 +63,22 @@ class Example
 
 
 	/**
-	 * Inserts an Item
+	 * Inserts an Example
 	 *
- 	 * @param string $access_key
+ 	 * @param array $params
  	 *
  	 * @access 'public'
  	 * @return array
 	 */
 
-	public static function insert()
+	public static function insert($params=[])
 	{
-		// Required Fields
-		$name = Spry::validator()->required()->minLength(1)->validate('name');
+		// Use Params from route as data
+		$data = $params;
 
-		$data = [
-			// 'account_id' => Spry::auth()->account_id,
-			// 'user_id' => Spry::auth()->user_id,
-			'name' => $name
-		];
+		// Additional Conditions and Filtering here
 
+		// Generate Response and return ID on Success or NULL on Failure
 		$response = Spry::db()->insert(self::$table, $data) ? ['id' => Spry::db()->id()] : null;
 		return Spry::response(000, $response);
 	}
@@ -97,34 +86,26 @@ class Example
 
 
 	/**
-	 * Updates an Item
+	 * Updates an Example
 	 *
- 	 * @param string $access_key
- 	 * @param int $id
+ 	 * @param array $params
  	 *
  	 * @access 'public'
  	 * @return array
 	 */
 
-	public static function update()
+	public static function update($params=[])
 	{
-		// Required Fields
-		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
-		$name = Spry::validator()->required()->minLength(1)->validate('name');
+		// Use Params from route as data
+		$data = $params;
 
-		$data = [
-			'name' => $name
-		];
-
+		// Set Where statement
 		$where = [
-			'AND' => [
-				// 'account_id' => Spry::auth()->account_id,
-				// 'user_id' => Spry::auth()->user_id,
-				'id' => $id
-			]
+			'id' => $params['id']
 		];
 
-		$response = Spry::db()->update(self::$table, $data, $where) ? ['id' => $id] : null;
+		// Generate Response and return ID on Success or NULL on Failure
+		$response = Spry::db()->update(self::$table, $data, $where) ? ['id' => $params['id']] : null;
 		return Spry::response(000, $response);
 
 	}
@@ -132,26 +113,18 @@ class Example
 
 
 	/**
-	 * Deletes an Item From Account by id
+	 * Deletes an Example
 	 *
- 	 * @param int $id
- 	 * @param string $access_key
+ 	 * @param array $params
  	 *
  	 * @access 'public'
  	 * @return array
 	 */
 
-	public static function delete()
+	public static function delete($params=[])
 	{
-		$id = Spry::validator()->required()->integer()->min(1)->validate('id');
-
-		$where = [
-			'AND' => [
-				// 'account_id' => Spry::auth()->account_id,
-				// 'user_id' => Spry::auth()->user_id,
-				'id' => $id
-			]
-		];
+		// Use Params from route as where statemnt
+		$where = $params;
 
 		$response = Spry::db()->delete(self::$table, $where) ? 1 : null;
 		return Spry::response(000, $response);
