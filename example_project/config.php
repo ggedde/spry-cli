@@ -143,17 +143,9 @@ $config->response_codes = [
 // Tests
 $config->tests = [
 	'connection' => [
-		'title' => 'Connection Test with Empty Parameters',
+		'title' => 'Connection Test',
 		'route' => '/testconnection',
 		'params' => [],
-		'expect' => [
-			'code' => 5010,
-		]
-	],
-	'connection2' => [
-		'title' => 'Connection Test with Parameters',
-		'route' => '/testconnection',
-		'params' => ['test' => 123],
 		'expect' => [
 			'code' => 5011,
 		]
@@ -170,14 +162,14 @@ $config->response_headers = [
 ////////////////////////////////////////////////////////////////////////
 // HOOKS - called after various methods
 ////////////////////////////////////////////////////////////////////////
+
 $config->hooks->configure = [
 	'Spry\\SpryProvider\\SpryLog::setup_php_logs',		// Called after the Config has been set.
 	'Spry\\SpryProvider\\SpryWebTools::WebTools'		// Display Webtools if configured.
 ];
 
 $config->hooks->set_params = [
-	'Spry\\SpryProvider\\SpryLog::initial_request',		// Called after the Params have been set.
-	//'Spry\\SpryComponent\\Auth::set'
+	'Spry\\SpryProvider\\SpryLog::initial_request'		// Called after the Params have been set.
 ];
 
 // $config->hooks->set_routes = [
@@ -193,11 +185,16 @@ $config->hooks->stop = [
 ////////////////////////////////////////////////////////////////////////
 // FILTERS - called after various methods.  Must return (parameter).
 ////////////////////////////////////////////////////////////////////////
+
+// $config->filters->configure = []							// Must return $config
+
 $config->filters->build_response = [
 	'Spry\\SpryProvider\\SpryLog::build_response_filter'	// Must return $response
 ];
+
 // $config->filters->response = []; 						// Must return $response
 // $config->filters->get_path = [];  						// Must return $path
 // $config->filters->get_route = [];  						// Must return $route
 // $config->filters->params = [];  							// Must return $params
 // $config->filters->output = [];  							// Must return $output
+// $config->filters->validate_params = []					// Must return $params
