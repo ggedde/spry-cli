@@ -40,34 +40,17 @@ if(!$config_file || ($config_file && !file_exists($config_file)))
     die("\e[91mERROR:\e[0m No Config File Found. Run SpryCli from the same folder that contains your 'config.php' file or 'spry/config.php' or specify the config file path with --config");
 }
 
-$config = new stdClass();
-$config->hooks = new stdClass();
-$config->filters = new stdClass();
-$config->db = new stdClass();
-require_once($config_file);
+$files = [
+    getcwd().'/vendor/autoload.php',
+    dirname(getcwd()).'/vendor/autoload.php'
+];
 
-if(!empty($config->cli_vendor_path))
+foreach($files as $file)
 {
-    $cli_vendor_autoload_file = rtrim($config->cli_vendor_path, '/').'/autoload.php';
-    if(!file_exists($cli_vendor_autoload_file))
+    if(file_exists($file))
     {
-        die("\e[91mERROR:\e[0m \$config->cli_vendor_path specified in config.php (".$config->cli_vendor_path."), but ".$cli_vendor_autoload_file." file does not exist. Make sure the 'autoload.php' file exists in the folder of \$config->cli_vendor_path");
-    }
-}
-else
-{
-    $files = [
-        getcwd().'/vendor/autoload.php',
-        dirname(getcwd()).'/vendor/autoload.php'
-    ];
-
-    foreach($files as $file)
-    {
-        if(file_exists($file))
-        {
-            $cli_vendor_autoload_file = $file;
-            break;
-        }
+        $cli_vendor_autoload_file = $file;
+        break;
     }
 }
 

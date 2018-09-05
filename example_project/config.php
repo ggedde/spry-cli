@@ -29,10 +29,6 @@ ini_set('error_reporting', E_ALL);
 $config->endpoint = 'http://localhost:8000';
 $config->components_dir = __DIR__.'/components';
 
-// Path to Composer Vendor folder for SpryCli
-// $config->cli_vendor_path = dirname(__DIR__).'/vendor';
-
-
 // WebTools
 $config->webtools_enabled = false;
 $config->webtools_endpoint = '/webtools';  	// Make sure this is unique and does not clash with your controllers
