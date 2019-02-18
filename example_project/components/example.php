@@ -15,6 +15,15 @@ class Example
 	private static $table = 'examples_table';
 
 
+	/**
+	 * Fields used to retrieve data from table
+	 * It is recommended to use array and specify each field rather then using wildcard
+	 *
+	 * @access 'private'
+	 */
+	private static $fields = '*';
+
+
 
 	/**
 	 * Returns a single Example
@@ -28,10 +37,7 @@ class Example
 
 	public static function get($params=[])
 	{
-		// Use Params from route as where statemnt
-		$where = $params;
-
-		return Spry::response(000, Spry::db()->get(self::$table, '*', $where));
+		return Spry::response(000, Spry::db()->get(self::$table, self::$fields, $params));
 	}
 
 
@@ -47,17 +53,14 @@ class Example
 
 	public static function get_all($params=[])
 	{
-		// Use Params from route as where statemnt
-		$where = $params;
-
 		// Set Possible Order Columns
-		$where['ORDER'] = SpryUtilities::dbGetOrder([
+		$params['ORDER'] = SpryUtilities::dbGetOrder([
 			self::$table.'.id',
 			self::$table.'.updated_at',
 			self::$table.'.created_at',
 		]);
 
-		return Spry::response(000, Spry::db()->select(self::$table, '*', $where));
+		return Spry::response(000, Spry::db()->select(self::$table, self::$fields, $params));
 	}
 
 
@@ -73,13 +76,10 @@ class Example
 
 	public static function insert($params=[])
 	{
-		// Use Params from route as data
-		$data = $params;
-
 		// Additional Conditions and Filtering here
 
 		// Generate Response and return ID on Success or NULL on Failure
-		$response = Spry::db()->insert(self::$table, $data) ? ['id' => Spry::db()->id()] : null;
+		$response = Spry::db()->insert(self::$table, $params) ? ['id' => Spry::db()->id()] : null;
 		return Spry::response(000, $response);
 	}
 
@@ -96,16 +96,13 @@ class Example
 
 	public static function update($params=[])
 	{
-		// Use Params from route as data
-		$data = $params;
-
 		// Set Where statement
 		$where = [
 			'id' => $params['id']
 		];
 
 		// Generate Response and return ID on Success or NULL on Failure
-		$response = Spry::db()->update(self::$table, $data, $where) ? ['id' => $params['id']] : null;
+		$response = Spry::db()->update(self::$table, $params, $where) ? ['id' => $params['id']] : null;
 		return Spry::response(000, $response);
 
 	}
@@ -123,10 +120,7 @@ class Example
 
 	public static function delete($params=[])
 	{
-		// Use Params from route as where statemnt
-		$where = $params;
-
-		$response = Spry::db()->delete(self::$table, $where) ? 1 : null;
+		$response = Spry::db()->delete(self::$table, $params) ? 1 : null;
 		return Spry::response(000, $response);
 	}
 
