@@ -1,6 +1,10 @@
 <?php
 
+/**
+ * @license MIT
+ * @license https://opensource.org/licenses/MIT
+ */
+
 namespace Spry;
 
-define('SPRY_DIR', __DIR__);
-Spry::run(SPRY_DIR.'/config.php');
+Spry::run(__DIR__.'/config.php');
