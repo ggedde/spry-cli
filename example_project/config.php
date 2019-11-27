@@ -103,17 +103,8 @@ $config->tests = [
 ];
 
 ////////////////////////////////////////////////////////////////////////
-// HOOKS - called after various methods
+// HOOKS & Filters
 ////////////////////////////////////////////////////////////////////////
-Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate', $config->logger);
-Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::setupPhpLogs');
-Spry::addHook('setParams', 'Spry\\SpryProvider\\SpryLogger::initialRequest');
-Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');
-Spry::addHook('stop', 'Spry\\SpryProvider\\SpryLogger::stop');
+Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate');
+// Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');
 // Spry::addHook('setParams', 'Spry\\SpryComponent\\Auth::set');
-
-
-////////////////////////////////////////////////////////////////////////
-// FILTERS - called after various methods.  Must return (parameter).
-////////////////////////////////////////////////////////////////////////
-Spry::addFilter('buildResponse', 'Spry\\SpryProvider\\SpryLogger::buildResponseFilter');
