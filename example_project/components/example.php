@@ -34,6 +34,13 @@ class Examples
     ];
 
     /**
+     * Variable to store the Component ID
+     *
+     * @access private
+     */
+    private static $id = 1;
+
+    /**
      * Schema used to build Tables in the Database
      *
      * @access public
@@ -142,23 +149,25 @@ class Examples
     public static function getCodes()
     {
         return [
-            2001 => ['en' => 'Successfully Retrieved Example'],
-            4001 => ['en' => 'No Example with that ID Found'],
-            5001 => ['en' => 'Error: Retrieving Example'],
+            self::$id => [
+                '201' => ['en' => 'Successfully Retrieved Example'],
+                '401' => ['en' => 'No Example with that ID Found'],
+                '501' => ['en' => 'Error: Retrieving Example'],
 
-            2002 => ['en' => 'Successfully Retrieved Examples'],
-            4002 => ['en' => 'No Results Found'],
-            5002 => ['en' => 'Error: Retrieving Examples'],
+                '202' => ['en' => 'Successfully Retrieved Examples'],
+                '402' => ['en' => 'No Results Found'],
+                '502' => ['en' => 'Error: Retrieving Examples'],
 
-            2003 => ['en' => 'Successfully Created Example'],
-            5003 => ['en' => 'Error: Creating Example'],
+                '203' => ['en' => 'Successfully Created Example'],
+                '503' => ['en' => 'Error: Creating Example'],
 
-            2004 => ['en' => 'Successfully Updated Example'],
-            4004 => ['en' => 'No Example with that ID Found'],
-            5004 => ['en' => 'Error: Updating Example'],
+                '204' => ['en' => 'Successfully Updated Example'],
+                '404' => ['en' => 'No Example with that ID Found'],
+                '504' => ['en' => 'Error: Updating Example'],
 
-            2005 => ['en' => 'Successfully Deleted Example'],
-            5005 => ['en' => 'Error: Deleting Example'],
+                '205' => ['en' => 'Successfully Deleted Example'],
+                '505' => ['en' => 'Error: Deleting Example'],
+            ],
         ];
     }
 
@@ -278,7 +287,7 @@ class Examples
 
         // Get Single
         if (!empty($where['id'])) {
-            return Spry::response(001, Spry::db()->get(self::$table, self::$fields, $where));
+            return Spry::response(self::$id, 01, Spry::db()->get(self::$table, self::$fields, $where));
         }
 
         // Get Multiple - Set Default Totals
@@ -303,7 +312,7 @@ class Examples
             ];
         }
 
-        return Spry::response(002, Spry::db()->select(self::$table, self::$fields, $where), null, $responseMeta);
+        return Spry::response(self::$id, 02, Spry::db()->select(self::$table, self::$fields, $where), null, $responseMeta);
     }
 
     /**
@@ -322,7 +331,7 @@ class Examples
         // Generate Response and return ID on Success or NULL on Failure
         $response = Spry::db()->insert(self::$table, $params) ? ['id' => Spry::db()->id()] : null;
 
-        return Spry::response(003, $response);
+        return Spry::response(self::$id, 03, $response);
     }
 
     /**
@@ -344,7 +353,7 @@ class Examples
         // Generate Response and return ID on Success or NULL on Failure
         $response = Spry::db()->update(self::$table, $params, $where) ? ['id' => $params['id']] : null;
 
-        return Spry::response(004, $response);
+        return Spry::response(self::$id, 04, $response);
     }
 
     /**
@@ -360,6 +369,6 @@ class Examples
     {
         $response = Spry::db()->delete(self::$table, $params) ? 1 : null;
 
-        return Spry::response(005, $response);
+        return Spry::response(self::$id, 05, $response);
     }
 }

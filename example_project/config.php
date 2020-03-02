@@ -91,7 +91,7 @@ $config->tests = [
         'route' => '/testconnection',
         'params' => [],
         'expect' => [
-            'code[===]' => 5011,
+            'code[===]' => '0-511',
         ],
     ],
     'connection2' => [
@@ -99,7 +99,7 @@ $config->tests = [
         'route' => '/testconnection',
         'params' => ['test' => 123],
         'expect' => [
-            'code[>]' => 5010,
+            'code[>]' => '0-510',
         ],
     ],
 ];
