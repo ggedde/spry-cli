@@ -27,14 +27,14 @@ $config->componentsDir = __DIR__.'/components';
 // Database
 $config->dbProvider = 'Spry\\SpryProvider\\SpryDB';
 $config->db = [
-    'database_type' => 'mysql',
-    'database_name' => 'spry',
-    'server' => '127.0.0.1',
-    'username' => 'root',
-    'password' => 'root',
     'charset' => 'utf8',
+    'database_type' => 'mysql',
+    'database_name' => '',
+    'username' => '',
+    'password' => '',
     'port' => 3306,
-    'prefix' => 'api_x_', // Should change this to be someting Unique
+    'prefix' => 'app_', // Should change this to be someting Unique
+    'server' => 'localhost',
     'schema' => [
         'tables' => [],
     ],
