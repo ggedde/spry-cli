@@ -85,7 +85,7 @@ class Examples
                     'pagination_page_limit' => [
                         'int' => true,
                     ],
-                    'pagination_minimum' => [
+                    'pagination_count' => [
                         'int' => true,
                     ],
                     'orderby' => [
@@ -281,7 +281,7 @@ class Examples
             [
                 'pagination_page',
                 'pagination_page_limit',
-                'pagination_minimum',
+                'pagination_count',
             ]
         );
 
