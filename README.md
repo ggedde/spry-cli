@@ -2,7 +2,7 @@
 Command Line Interface for Spry
 
 REQUIRES:
-* PHP 5.4+
+* PHP 5.5+
 
 # Installation
 
