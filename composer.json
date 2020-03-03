@@ -1,9 +1,9 @@
 {
     "name": "ggedde/spry-cli",
     "description": "Command Line Interface for spry",
-    "type": "CommandLineInterface",
+    "type": "cli",
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.5.0"
     },
     "license": "MIT",
     "authors": [
