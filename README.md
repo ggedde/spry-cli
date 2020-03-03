@@ -1,8 +1,7 @@
 # SpryCli
 Command Line Interface for Spry
 
-REQUIRES:
-* PHP 5.5+
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ggedde/spry-cli) &nbsp; ![GitHub](https://img.shields.io/github/license/ggedde/spry?label=license) &nbsp; ![PHP from Packagist](https://img.shields.io/packagist/php-v/ggedde/spry)
 
 # Installation
 
