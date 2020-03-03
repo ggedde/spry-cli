@@ -25,16 +25,17 @@ $config->endpoint = 'http://localhost:8000';
 $config->componentsDir = __DIR__.'/components';
 
 // Database
-$config->dbProvider = 'Spry\\SpryProvider\\SpryDB';
+$config->dbProvider = '[dbprov]';
 $config->db = [
-    'charset' => 'utf8',
-    'database_type' => 'mysql',
-    'database_name' => '',
-    'username' => '',
-    'password' => '',
-    'port' => 3306,
-    'prefix' => 'app_', // Should change this to be someting Unique
-    'server' => 'localhost',
+    'database_type' => '[dbtype]',
+    'database_name' => '[dbname]',
+    'username' => '[dbuser]',
+    'password' => '[dbpass]',
+    'port' => '[dbport]',
+    'prefix' => '[dbpref]', // Should change this to be someting Unique
+    'server' => '[dbhost]',
+    'charset' => '[dbchar]',
+    'collation' => '[dbcoll]',
     'schema' => [
         'tables' => [],
     ],
@@ -65,8 +66,8 @@ $config->logger = [
 // WebTools
 $config->webtoolsEnabled = false;
 $config->webtoolsEndpoint = '/webtools'; // Make sure this is unique and does not clash with your controllers
-$config->webtoolsUsername = ''; // Username is required
-$config->webtoolsPassword = ''; // Password is required
+$config->webtoolsUsername = '[wtuser]'; // Username is required
+$config->webtoolsPassword = '[wtpass]'; // Password is required
 $config->webtoolsAllowedIps = [
     '127.0.0.1',
     '::1',
@@ -108,6 +109,3 @@ $config->tests = [
 ////////////////////////////////////////////////////////////////////////
 // HOOKS & Filters
 ////////////////////////////////////////////////////////////////////////
-Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate');
-// Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');
-// Spry::addHook('setParams', 'Spry\\SpryComponent\\Auth::set');

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLI_VERSION="1.0.4"
+CLI_VERSION="1.0.6"
 
 BIN_DIR=$(dirname $0)
 
@@ -25,7 +25,7 @@ do
 
         if [ $2 ] && [ "$2" != "" ]
         then
-
+            
             if [ -d $2 ]
             then
 
@@ -80,14 +80,171 @@ do
 
         else
             cp -r $SPRY_DIR/example_project spry
+
+            if [ ! -f 'spry/config.php' ]
+            then
+                printf "\e[31;4mERROR:\e[0m Missing config file."
+                echo ''
+                exit
+            fi
+
+            dbchar=""
+            dbcoll=""
+
+            printf "\e[96mChoose a Database:\e[0m"
+            echo ""
+            COLUMNS=12
+            PS3=$'\e[96mEnter your choice: \e[0m'
+            options=("MySQL" "MariaDB" "PostgreSQL" "Sybase" "Oracle" "SQLite" "Microsoft SQL" "None")
+            select opt in "${options[@]}"
+            do
+                case $opt in
+                    "MySQL")
+                        dbtype="mysql"
+                        dbchar="utf8mb4"
+                        dbcoll="utf8mb4_unicode_ci"
+                        break
+                        ;;
+                    "MariaDB")
+                        dbtype="mysql"
+                        dbchar="utf8mb4"
+                        dbcoll="utf8mb4_unicode_ci"
+                        break
+                        ;;
+                    "PostgreSQL")
+                        dbtype="pgsql"
+                        break
+                        ;;
+                    "Sybase")
+                        dbtype="sybase"
+                        break
+                        ;;
+                    "Oracle")
+                        dbtype="oracle"
+                        break
+                        ;;
+                    "SQLite")
+                        dbtype="sqlite"
+                        break
+                        ;;
+                    "Microsoft SQL")
+                        dbtype="mssql"
+                        break
+                        ;;
+                    "None")
+                        dbtype=""
+                        break
+                        ;;
+                    *) echo "invalid option $REPLY";;
+                esac
+            done
+
+            if [ $dbtype ]
+            then
+                printf "\e[96mDatabase\e[0m Type: $dbtype"
+                echo ""
+                printf "\e[96mDatabase\e[0m Name:"
+                read -p ' ' dbname
+                printf "\e[96mDatabase\e[0m Host:"
+                read -p ' ' dbhost
+                printf "\e[96mDatabase\e[0m Port:"
+                read -p ' ' dbport
+                printf "\e[96mDatabase\e[0m Prefix:"
+                read -p ' ' dbpref
+                printf  "\e[96mDatabase\e[0m Username:"
+                read -p ' ' dbuser
+                printf  "\e[96mDatabase\e[0m Password:"
+                read -sp ' ' dbpass
+                echo ""
+
+                sed -i -e "s/\[dbtype\]/$dbtype/g" spry/config.php
+                sed -i -e "s/\[dbname\]/$dbname/g" spry/config.php
+                sed -i -e "s/\[dbhost\]/$dbhost/g" spry/config.php
+                sed -i -e "s/\[dbport\]/$dbport/g" spry/config.php
+                sed -i -e "s/\[dbpref\]/$dbpref/g" spry/config.php
+                sed -i -e "s/\[dbuser\]/$dbuser/g" spry/config.php
+                sed -i -e "s/\[dbpass\]/$dbpass/g" spry/config.php
+                sed -i -e "s/\[dbchar\]/$dbchar/g" spry/config.php
+                sed -i -e "s/\[dbcoll\]/$dbcoll/g" spry/config.php
+                sed -i -e "s/\[dbprov\]/Spry\\\\\\SpryProvider\\\\\\SpryDB/g" spry/config.php
+
+            else
+                printf "\e[96mDatabase:\e[0m None"
+                echo ""
+
+                sed -i -e "s/\[dbtype\]//g" spry/config.php
+                sed -i -e "s/\[dbname\]//g" spry/config.php
+                sed -i -e "s/\[dbhost\]//g" spry/config.php
+                sed -i -e "s/\[dbport\]//g" spry/config.php
+                sed -i -e "s/\[dbuser\]//g" spry/config.php
+                sed -i -e "s/\[dbpass\]//g" spry/config.php
+                sed -i -e "s/\[dbpref\]//g" spry/config.php
+                sed -i -e "s/\[dbchar\]//g" spry/config.php
+                sed -i -e "s/\[dbcoll\]//g" spry/config.php
+                sed -i -e "s/\[dbprov\]//g" spry/config.php
+            fi
+
+            printf "\e[96mEnable Logging:\e[0m"
+            echo ""
+            COLUMNS=12
+            PS3=$'\e[96mEnter your choice: \e[0m'
+            options=("Yes" "No")
+            select opt in "${options[@]}"
+            do
+                case $opt in
+                    "Yes")
+                        echo "Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate');" >> spry/config.php
+                        break
+                        ;;
+                    "No")
+                        echo "// Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate');" >> spry/config.php
+                        break
+                        ;;
+                    *) echo "invalid option $REPLY";;
+                esac
+            done
+
+            printf "\e[96mEnable WebTools:\e[0m"
+            echo ""
+            COLUMNS=12
+            PS3=$'\e[96mEnter your choice: \e[0m'
+            options=("Yes" "No")
+            select opt in "${options[@]}"
+            do
+                case $opt in
+                    "Yes")
+                        printf "\e[96mWebTools\e[0m Username:"
+                        read -p ' ' wtuser
+                        printf "\e[96mWebTools\e[0m Password:"
+                        read -sp ' ' wtpass
+
+                        sed -i -e "s/\[wtuser\]/$wtuser/g" spry/config.php
+                        sed -i -e "s/\[wtpass\]/$wtpass/g" spry/config.php
+                        
+                        echo "Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');" >> spry/config.php
+
+                        break
+                        ;;
+                    "No")
+                        sed -i -e "s/\[wtuser\]/$wtuser/g" spry/config.php
+                        sed -i -e "s/\[wtpass\]/$wtpass/g" spry/config.php
+
+                        echo "// Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');" >> spry/config.php
+
+                        break
+                        ;;
+                    *) echo "invalid option $REPLY";;
+                esac
+            done
         fi
 
         if [ ! -f 'composer.json' ]
         then
-            echo 'Downloading Composer Packages...'
+            echo ""
+            printf "\e[96mDownloading Composer Packages...\e[0m"
+            echo ""
             composer require ggedde/spry
         fi
-
 
         if [ $2 ] && [ "$2" != "" ]
         then
