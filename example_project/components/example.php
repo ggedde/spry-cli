@@ -41,6 +41,30 @@ class Examples
     private static $id = 1;
 
     /**
+     * Return the Fields
+     *
+     * @access public
+     *
+     * @return string|array
+     */
+    public static function getFields()
+    {
+        return self::$fields;
+    }
+
+    /**
+     * Return the Table
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public static function getTable()
+    {
+        return self::$table;
+    }
+
+    /**
      * Schema used to build Tables in the Database
      *
      * @access public
