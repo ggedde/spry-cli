@@ -16,6 +16,13 @@ use Spry\SpryUtilities;
 class Examples
 {
     /**
+     * Variable to store the Component ID
+     *
+     * @access private
+     */
+    private static $id = 1;
+
+    /**
      * Variable to store the table name
      *
      * @access private
@@ -34,22 +41,15 @@ class Examples
     ];
 
     /**
-     * Variable to store the Component ID
-     *
-     * @access private
-     */
-    private static $id = 1;
-
-    /**
-     * Return the Fields
+     * Return the Id
      *
      * @access public
      *
-     * @return string|array
+     * @return string
      */
-    public static function getFields()
+    public static function getId()
     {
-        return self::$fields;
+        return self::$id;
     }
 
     /**
@@ -62,6 +62,18 @@ class Examples
     public static function getTable()
     {
         return self::$table;
+    }
+
+    /**
+     * Return the Fields
+     *
+     * @access public
+     *
+     * @return string|array
+     */
+    public static function getFields()
+    {
+        return self::$fields;
     }
 
     /**
@@ -101,24 +113,34 @@ class Examples
                 'methods' => 'GET',
                 'params' => [
                     'id' => [
-                        'int' => true,
+                        'type' => 'int',
                     ],
                     'pagination_page' => [
-                        'int' => true,
+                        'type' => 'int',
+                        'meta' => true,
                     ],
                     'pagination_page_limit' => [
-                        'int' => true,
+                        'type' => 'int',
+                        'meta' => true,
                     ],
                     'pagination_count' => [
-                        'int' => true,
+                        'type' => 'int',
+                        'meta' => true,
                     ],
                     'orderby' => [
+                        'type' => 'string',
                         'oneof' => ['id', 'name', 'updated_at', 'created_at'],
+                        'meta' => true,
                     ],
                     'order' => [
+                        'type' => 'string',
                         'oneof' => ['ASC', 'DESC'],
+                        'meta' => true,
                     ],
-                    'search',
+                    'search' => [
+                        'type' => 'string',
+                        'meta' => true,
+                    ],
                 ],
             ],
             '/examples/insert' => [
@@ -129,6 +151,7 @@ class Examples
                 'params' => [
                     'name' => [
                         'required' => true,
+                        'type' => 'string',
                         'minlength' => 1,
                     ],
                 ],
@@ -141,9 +164,10 @@ class Examples
                 'params' => [
                     'id' => [
                         'required' => true,
-                        'int' => true,
+                        'type' => 'int',
                     ],
                     'name' => [
+                        'type' => 'string',
                         'minlength' => 1,
                     ],
                 ],
@@ -156,7 +180,7 @@ class Examples
                 'params' => [
                     'id' => [
                         'required' => true,
-                        'int' => true,
+                        'type' => 'int',
                     ],
                 ],
             ],
@@ -173,25 +197,23 @@ class Examples
     public static function getCodes()
     {
         return [
-            self::$id => [
-                '201' => ['en' => 'Successfully Retrieved Example'],
-                '401' => ['en' => 'No Example with that ID Found'],
-                '501' => ['en' => 'Error: Retrieving Example'],
-
-                '202' => ['en' => 'Successfully Retrieved Examples'],
-                '402' => ['en' => 'No Results Found'],
-                '502' => ['en' => 'Error: Retrieving Examples'],
-
-                '203' => ['en' => 'Successfully Created Example'],
-                '503' => ['en' => 'Error: Creating Example'],
-
-                '204' => ['en' => 'Successfully Updated Example'],
-                '404' => ['en' => 'No Example with that ID Found'],
-                '504' => ['en' => 'Error: Updating Example'],
-
-                '205' => ['en' => 'Successfully Deleted Example'],
-                '505' => ['en' => 'Error: Deleting Example'],
-            ],
+            // Get Single
+            '201' => ['en' => 'Successfully Retrieved Example'],
+            '401' => ['en' => 'No Example with that ID Found'],
+            '501' => ['en' => 'Error: Retrieving Example'],
+            // Get
+            '102' => ['en' => 'No Results Found'],
+            '202' => ['en' => 'Successfully Retrieved Examples'],
+            '502' => ['en' => 'Error: Retrieving Examples'],
+            // Insert
+            '203' => ['en' => 'Successfully Created Example'],
+            '503' => ['en' => 'Error: Creating Example'],
+            // Update
+            '204' => ['en' => 'Successfully Updated Example'],
+            '504' => ['en' => 'Error: Updating Example'],
+            // Delete
+            '205' => ['en' => 'Successfully Deleted Example'],
+            '505' => ['en' => 'Error: Deleting Example'],
         ];
     }
 
@@ -255,7 +277,7 @@ class Examples
                     'id' => '-1',
                 ],
                 'expect' => [
-                    'status' => 'success',
+                    'status' => 'error',
                 ],
             ],
             'examples_update' => [
@@ -288,111 +310,94 @@ class Examples
      * Returns a single Example
      *
      * @param array $params
+     * @param array $meta
      *
      * @access public
      *
      * @return SpryResponse
      */
-    public static function get($params = [])
+    public static function get($params = [], $meta = [])
     {
-        $where = SpryUtilities::dbPrepareWhere(
-            $params,
-            [
-                'id',
-                'updated_at',
-                'created_at',
-            ],
-            [
-                'pagination_page',
-                'pagination_page_limit',
-                'pagination_count',
-            ]
-        );
-
         // Get Single
-        if (!empty($where['id'])) {
-            return Spry::response(self::$id, 01, Spry::db()->get(self::$table, self::$fields, $where));
+        if (!empty($params['id'])) {
+            return Spry::response([self::$id, 1], Spry::db()->get(self::$table, self::$fields, ['id' => $params['id']]));
         }
 
-        // Get Multiple - Set Default Totals
-        $total = $searchTotal = Spry::db()->count(self::$table, 'id', $where);
+        $prepareSelect = SpryUtilities::dbPrepareSelect(self::$table, $params, $meta, ['id', 'name']);
 
-        // Set Search Parameter and Fields to search on
-        if (!empty($params['search'])) {
-            $where['OR'] = [
-                'id[~]' => $params['search'],
-                'name[~]' => $params['search'],
-            ];
-            $searchTotal = Spry::db()->count(self::$table, 'id', $where);
-        }
-
-        $responseMeta = null;
-        $pagination = SpryUtilities::dbGetPagination($params, $total, $searchTotal);
-
-        if (!empty($pagination->limit)) {
-            $where['LIMIT'] = $pagination->limit;
-            $responseMeta = [
-                'pagination' => $pagination->meta,
-            ];
-        }
-
-        return Spry::response(self::$id, 02, Spry::db()->select(self::$table, self::$fields, $where), null, $responseMeta);
+        return Spry::response([self::$id, 2], Spry::db()->select(self::$table, self::$fields, $prepareSelect['where']), null, $prepareSelect['meta']);
     }
 
     /**
      * Inserts an Example
      *
      * @param array $params
+     * @param array $meta
      *
      * @access public
      *
      * @return SpryResponse
      */
-    public static function insert($params = [])
+    public static function insert($params = [], $meta = [])
     {
         // Additional Conditions and Filtering here
 
         // Generate Response and return ID on Success or NULL on Failure
         $response = Spry::db()->insert(self::$table, $params) ? ['id' => Spry::db()->id()] : null;
 
-        return Spry::response(self::$id, 03, $response);
+        return Spry::response([self::$id, 3], $response);
     }
 
     /**
      * Updates an Example
      *
      * @param array $params
+     * @param array $meta
      *
      * @access public
      *
      * @return SpryResponse
      */
-    public static function update($params = [])
+    public static function update($params = [], $meta = [])
     {
         // Set Where statement
         $where = [
             'id' => $params['id'],
         ];
 
+        if (empty(self::get($where)['body']['id'])) {
+            Spry::stop([self::$id, 401]);
+        }
+
         // Generate Response and return ID on Success or NULL on Failure
         $response = Spry::db()->update(self::$table, $params, $where) ? ['id' => $params['id']] : null;
 
-        return Spry::response(self::$id, 04, $response);
+        return Spry::response([self::$id, 4], $response);
     }
 
     /**
      * Deletes an Example
      *
      * @param array $params
+     * @param array $meta
      *
      * @access public
      *
      * @return SpryResponse
      */
-    public static function delete($params = [])
+    public static function delete($params = [], $meta = [])
     {
-        $response = Spry::db()->delete(self::$table, $params) ? 1 : null;
+        // Set Where statement
+        $where = [
+            'id' => $params['id'],
+        ];
 
-        return Spry::response(self::$id, 05, $response);
+        if (empty(self::get($where)['body']['id'])) {
+            Spry::stop([self::$id, 401]);
+        }
+
+        $response = Spry::db()->delete(self::$table, $where) ? 1 : null;
+
+        return Spry::response([self::$id, 5], $response);
     }
 }
