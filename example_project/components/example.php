@@ -106,7 +106,7 @@ class Examples
     public static function getRoutes()
     {
         return [
-            '/examples/get' => [
+            '/example/get' => [
                 'label' => 'Get Example',
                 'controller' => 'Examples::get',
                 'access' => 'public',
@@ -143,7 +143,7 @@ class Examples
                     ],
                 ],
             ],
-            '/examples/insert' => [
+            '/example/insert' => [
                 'label' => 'Insert Example',
                 'controller' => 'Examples::insert',
                 'access' => 'public',
@@ -156,7 +156,7 @@ class Examples
                     ],
                 ],
             ],
-            '/examples/update' => [
+            '/example/update' => [
                 'label' => 'Update Example',
                 'controller' => 'Examples::update',
                 'access' => 'public',
@@ -172,7 +172,7 @@ class Examples
                     ],
                 ],
             ],
-            '/examples/delete' => [
+            '/example/delete' => [
                 'label' => 'Delete Example',
                 'controller' => 'Examples::delete',
                 'access' => 'public',
@@ -229,7 +229,7 @@ class Examples
         return [
             'examples_get_all_empty' => [
                 'label' => 'Get All Examples Empty',
-                'route' => '/examples/get',
+                'route' => '/example/get',
                 'method' => 'GET',
                 'params' => [
                     'name' => '!',
@@ -240,7 +240,7 @@ class Examples
             ],
             'examples_insert' => [
                 'label' => 'Insert Example',
-                'route' => '/examples/insert',
+                'route' => '/example/insert',
                 'method' => 'POST',
                 'params' => [
                     'name' => 'TestData',
@@ -251,7 +251,7 @@ class Examples
             ],
             'examples_get_all' => [
                 'label' => 'Get All Examples',
-                'route' => '/examples/get',
+                'route' => '/example/get',
                 'method' => 'GET',
                 'params' => [],
                 'expect' => [
@@ -260,7 +260,7 @@ class Examples
             ],
             'examples_get' => [
                 'label' => 'Get Example',
-                'route' => '/examples/get',
+                'route' => '/example/get',
                 'method' => 'GET',
                 'params' => [
                     'id' => '{examples_insert.body.id}',
@@ -271,7 +271,7 @@ class Examples
             ],
             'examples_get_empty' => [
                 'label' => 'Get Example Empty',
-                'route' => '/examples/get',
+                'route' => '/example/get',
                 'method' => 'GET',
                 'params' => [
                     'id' => '-1',
@@ -282,7 +282,7 @@ class Examples
             ],
             'examples_update' => [
                 'label' => 'Update Example',
-                'route' => '/examples/update',
+                'route' => '/example/update',
                 'method' => 'POST',
                 'params' => [
                     'id' => '{examples_insert.body.id}',
@@ -294,7 +294,7 @@ class Examples
             ],
             'examples_delete' => [
                 'label' => 'Delete Example',
-                'route' => '/examples/delete',
+                'route' => '/example/delete',
                 'method' => 'POST',
                 'params' => [
                     'id' => '{examples_insert.body.id}',
