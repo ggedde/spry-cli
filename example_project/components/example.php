@@ -323,9 +323,14 @@ class Examples
             return Spry::response([self::$id, 1], Spry::db()->get(self::$table, self::$fields, ['id' => $params['id']]));
         }
 
+        // Prepare the Select statement and include Pagination and totals if needed
         $prepareSelect = SpryUtilities::dbPrepareSelect(self::$table, $params, $meta, ['id', 'name']);
 
-        return Spry::response([self::$id, 2], Spry::db()->select(self::$table, self::$fields, $prepareSelect['where']), null, $prepareSelect['meta']);
+        // Select Examples based on Prepared Select
+        $response = Spry::db()->select(self::$table, self::$fields, $prepareSelect->where);
+
+        // Return Response and Meta if needed
+        return Spry::response([self::$id, 2], $response, null, $prepareSelect->meta);
     }
 
     /**
@@ -365,7 +370,8 @@ class Examples
             'id' => $params['id'],
         ];
 
-        if (empty(self::get($where)['body']['id'])) {
+        // Check to make sure requested Example exists
+        if (empty(self::get($where)->body['id'])) {
             Spry::stop([self::$id, 401]);
         }
 
@@ -392,10 +398,12 @@ class Examples
             'id' => $params['id'],
         ];
 
-        if (empty(self::get($where)['body']['id'])) {
+        // Check to make sure requested Example exists
+        if (empty(self::get($where)->body['id'])) {
             Spry::stop([self::$id, 401]);
         }
 
+        // Delete Item and Return 1 on Success or NULL on Failure
         $response = Spry::db()->delete(self::$table, $where) ? 1 : null;
 
         return Spry::response([self::$id, 5], $response);
