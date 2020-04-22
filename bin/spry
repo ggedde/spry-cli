@@ -226,6 +226,8 @@ do
                         break
                         ;;
                     "No")
+                        wtuser=""
+                        wtpass=""
                         sed -i -e "s/\[wtuser\]/$wtuser/g" spry/config.php
                         sed -i -e "s/\[wtpass\]/$wtpass/g" spry/config.php
 
