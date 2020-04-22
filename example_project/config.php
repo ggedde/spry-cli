@@ -53,6 +53,7 @@ $config->logger = [
     'max_lines' => 10000,
     'archive' => true,
     'max_archives' => 5,
+    'log_cli' => true,
     'prefix' => [
         'message' => 'Spry: ',
         'warning' => 'Spry Warning: ',

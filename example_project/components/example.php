@@ -16,31 +16,6 @@ use Spry\SpryUtilities;
 class Examples
 {
     /**
-     * Variable to store the Component ID
-     *
-     * @access private
-     */
-    private static $id = 1;
-
-    /**
-     * Variable to store the table name
-     *
-     * @access private
-     */
-    private static $table = 'examples';
-
-    /**
-     * Fields used to retrieve data from table
-     * It is recommended to use array and specify each field rather then using wildcard
-     *
-     * @access private
-     */
-    private static $fields = [
-        'id',
-        'name',
-    ];
-
-    /**
      * Return the Id
      *
      * @access public
@@ -49,7 +24,7 @@ class Examples
      */
     public static function getId()
     {
-        return self::$id;
+        return 1;
     }
 
     /**
@@ -61,7 +36,7 @@ class Examples
      */
     public static function getTable()
     {
-        return self::$table;
+        return 'examples';
     }
 
     /**
@@ -73,7 +48,10 @@ class Examples
      */
     public static function getFields()
     {
-        return self::$fields;
+        return [
+            'id',
+            'name',
+        ];
     }
 
     /**
@@ -86,7 +64,7 @@ class Examples
     public static function getSchema()
     {
         return [
-            self::$table => [
+            self::getTable() => [
                 'columns' => [
                     'name' => [
                         'type' => 'string',
@@ -197,23 +175,28 @@ class Examples
     public static function getCodes()
     {
         return [
-            // Get Single
-            '201' => ['en' => 'Successfully Retrieved Example'],
-            '401' => ['en' => 'No Example with that ID Found'],
-            '501' => ['en' => 'Error: Retrieving Example'],
-            // Get
-            '102' => ['en' => 'No Results Found'],
-            '202' => ['en' => 'Successfully Retrieved Examples'],
-            '502' => ['en' => 'Error: Retrieving Examples'],
-            // Insert
-            '203' => ['en' => 'Successfully Created Example'],
-            '503' => ['en' => 'Error: Creating Example'],
-            // Update
-            '204' => ['en' => 'Successfully Updated Example'],
-            '504' => ['en' => 'Error: Updating Example'],
-            // Delete
-            '205' => ['en' => 'Successfully Deleted Example'],
-            '505' => ['en' => 'Error: Deleting Example'],
+            0 => [ // Get Single
+                'success' => ['en' => 'Successfully Retrieved Example'],
+                'warning' => ['en' => 'No Example with that ID Found'],
+                'error' => ['en' => 'Error: Retrieving Example'],
+            ],
+            1 => [ // Select
+                'info' => ['en' => 'No Results Found'],
+                'success' => ['en' => 'Successfully Retrieved Examples'],
+                'error' => ['en' => 'Error: Retrieving Examples'],
+            ],
+            2 => [ // Insert
+                'success' => ['en' => 'Successfully Created Example'],
+                'error' => ['en' => 'Error: Creating Example'],
+            ],
+            3 => [ // Update
+                'success' => ['en' => 'Successfully Updated Example'],
+                'error' => ['en' => 'Error: Updating Example'],
+            ],
+            4 => [ // Delete
+                'success' => ['en' => 'Successfully Deleted Example'],
+                'error' => ['en' => 'Error: Deleting Example'],
+            ],
         ];
     }
 
@@ -320,17 +303,17 @@ class Examples
     {
         // Get Single
         if (!empty($params['id'])) {
-            return Spry::response([self::$id, 1], Spry::db()->get(self::$table, self::$fields, ['id' => $params['id']]));
+            return Spry::response(Spry::db()->get(self::getTable(), self::getFields(), ['id' => $params['id']]), 0);
         }
 
         // Prepare the Select statement and include Pagination and totals if needed
-        $prepareSelect = SpryUtilities::dbPrepareSelect(self::$table, $params, $meta, ['id', 'name']);
+        $prepareSelect = SpryUtilities::dbPrepareSelect(self::getTable(), null, $params, $meta, ['id', 'name']);
 
         // Select Examples based on Prepared Select
-        $response = Spry::db()->select(self::$table, self::$fields, $prepareSelect->where);
+        $response = Spry::db()->select(self::getTable(), self::getFields(), $prepareSelect->where);
 
         // Return Response and Meta if needed
-        return Spry::response([self::$id, 2], $response, null, $prepareSelect->meta);
+        return Spry::response($response, null, $prepareSelect->meta, 1);
     }
 
     /**
@@ -348,9 +331,9 @@ class Examples
         // Additional Conditions and Filtering here
 
         // Generate Response and return ID on Success or NULL on Failure
-        $response = Spry::db()->insert(self::$table, $params) ? ['id' => Spry::db()->id()] : null;
+        $response = Spry::db()->insert(self::getTable(), $params) ? ['id' => Spry::db()->id()] : null;
 
-        return Spry::response([self::$id, 3], $response);
+        return Spry::response($response, 2);
     }
 
     /**
@@ -370,15 +353,17 @@ class Examples
             'id' => $params['id'],
         ];
 
+        $example = self::get($where)->body;
+
         // Check to make sure requested Example exists
-        if (empty(self::get($where)->body['id'])) {
-            Spry::stop([self::$id, 401]);
+        if (empty($example['id'])) {
+            Spry::stop(0);
         }
 
         // Generate Response and return ID on Success or NULL on Failure
-        $response = Spry::db()->update(self::$table, $params, $where) ? ['id' => $params['id']] : null;
+        $response = Spry::db()->update(self::getTable(), $params, $where) ? ['id' => $example['id']] : null;
 
-        return Spry::response([self::$id, 4], $response);
+        return Spry::response($response, 3);
     }
 
     /**
@@ -398,14 +383,16 @@ class Examples
             'id' => $params['id'],
         ];
 
+        $example = self::get($where)->body;
+
         // Check to make sure requested Example exists
-        if (empty(self::get($where)->body['id'])) {
-            Spry::stop([self::$id, 401]);
+        if (empty($example['id'])) {
+            Spry::stop(0);
         }
 
         // Delete Item and Return 1 on Success or NULL on Failure
-        $response = Spry::db()->delete(self::$table, $where) ? 1 : null;
+        $response = Spry::db()->delete(self::getTable(), $where) ? 1 : null;
 
-        return Spry::response([self::$id, 5], $response);
+        return Spry::response($response, 4);
     }
 }
