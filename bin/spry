@@ -157,31 +157,31 @@ do
                 read -sp ' ' dbpass
                 echo ""
 
-                sed -i -e "s/\[dbtype\]/$dbtype/g" spry/config.php
-                sed -i -e "s/\[dbname\]/$dbname/g" spry/config.php
-                sed -i -e "s/\[dbhost\]/$dbhost/g" spry/config.php
-                sed -i -e "s/\[dbport\]/$dbport/g" spry/config.php
-                sed -i -e "s/\[dbpref\]/$dbpref/g" spry/config.php
-                sed -i -e "s/\[dbuser\]/$dbuser/g" spry/config.php
-                sed -i -e "s/\[dbpass\]/$dbpass/g" spry/config.php
-                sed -i -e "s/\[dbchar\]/$dbchar/g" spry/config.php
-                sed -i -e "s/\[dbcoll\]/$dbcoll/g" spry/config.php
-                sed -i -e "s/\[dbprov\]/Spry\\\\\\SpryProvider\\\\\\SpryDB/g" spry/config.php
+                sed -i '' "s/\[dbtype\]/$dbtype/g" spry/config.php
+                sed -i '' "s/\[dbname\]/$dbname/g" spry/config.php
+                sed -i '' "s/\[dbhost\]/$dbhost/g" spry/config.php
+                sed -i '' "s/\[dbport\]/$dbport/g" spry/config.php
+                sed -i '' "s/\[dbpref\]/$dbpref/g" spry/config.php
+                sed -i '' "s/\[dbuser\]/$dbuser/g" spry/config.php
+                sed -i '' "s/\[dbpass\]/$dbpass/g" spry/config.php
+                sed -i '' "s/\[dbchar\]/$dbchar/g" spry/config.php
+                sed -i '' "s/\[dbcoll\]/$dbcoll/g" spry/config.php
+                sed -i '' "s/\[dbprov\]/Spry\\\\\\SpryProvider\\\\\\SpryDB/g" spry/config.php
 
             else
                 printf "\e[96mDatabase:\e[0m None"
                 echo ""
 
-                sed -i -e "s/\[dbtype\]//g" spry/config.php
-                sed -i -e "s/\[dbname\]//g" spry/config.php
-                sed -i -e "s/\[dbhost\]//g" spry/config.php
-                sed -i -e "s/\[dbport\]//g" spry/config.php
-                sed -i -e "s/\[dbuser\]//g" spry/config.php
-                sed -i -e "s/\[dbpass\]//g" spry/config.php
-                sed -i -e "s/\[dbpref\]//g" spry/config.php
-                sed -i -e "s/\[dbchar\]//g" spry/config.php
-                sed -i -e "s/\[dbcoll\]//g" spry/config.php
-                sed -i -e "s/\[dbprov\]//g" spry/config.php
+                sed -i '' "s/\[dbtype\]//g" spry/config.php
+                sed -i '' "s/\[dbname\]//g" spry/config.php
+                sed -i '' "s/\[dbhost\]//g" spry/config.php
+                sed -i '' "s/\[dbport\]//g" spry/config.php
+                sed -i '' "s/\[dbuser\]//g" spry/config.php
+                sed -i '' "s/\[dbpass\]//g" spry/config.php
+                sed -i '' "s/\[dbpref\]//g" spry/config.php
+                sed -i '' "s/\[dbchar\]//g" spry/config.php
+                sed -i '' "s/\[dbcoll\]//g" spry/config.php
+                sed -i '' "s/\[dbprov\]//g" spry/config.php
             fi
 
             printf "\e[96mEnable Logging:\e[0m"
@@ -218,8 +218,8 @@ do
                         printf "\e[96mWebTools\e[0m Password:"
                         read -sp ' ' wtpass
 
-                        sed -i -e "s/\[wtuser\]/$wtuser/g" spry/config.php
-                        sed -i -e "s/\[wtpass\]/$wtpass/g" spry/config.php
+                        sed -i '' "s/\[wtuser\]/$wtuser/g" spry/config.php
+                        sed -i '' "s/\[wtpass\]/$wtpass/g" spry/config.php
                         
                         echo "Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');" >> spry/config.php
 
@@ -228,8 +228,8 @@ do
                     "No")
                         wtuser=""
                         wtpass=""
-                        sed -i -e "s/\[wtuser\]/$wtuser/g" spry/config.php
-                        sed -i -e "s/\[wtpass\]/$wtpass/g" spry/config.php
+                        sed -i '' "s/\[wtuser\]/$wtuser/g" spry/config.php
+                        sed -i '' "s/\[wtpass\]/$wtpass/g" spry/config.php
 
                         echo "// Spry::addHook('setPath', 'Spry\\SpryProvider\\SpryWebTools::webTools');" >> spry/config.php
 
@@ -239,6 +239,8 @@ do
                 esac
             done
         fi
+
+        exit;
 
         if [ ! -f 'composer.json' ]
         then
