@@ -13,7 +13,7 @@ use Spry\SpryUtilities;
 /**
  * Spry Component
  */
-class Examples
+class ExampleComponent
 {
     /**
      * Return the Id
@@ -86,7 +86,7 @@ class Examples
         return [
             '/example/get' => [
                 'label' => 'Get Example',
-                'controller' => 'Examples::get',
+                'controller' => 'ExampleComponent::get',
                 'access' => 'public',
                 'methods' => 'GET',
                 'params' => [
@@ -123,7 +123,7 @@ class Examples
             ],
             '/example/insert' => [
                 'label' => 'Insert Example',
-                'controller' => 'Examples::insert',
+                'controller' => 'ExampleComponent::insert',
                 'access' => 'public',
                 'methods' => 'POST',
                 'params' => [
@@ -136,7 +136,7 @@ class Examples
             ],
             '/example/update' => [
                 'label' => 'Update Example',
-                'controller' => 'Examples::update',
+                'controller' => 'ExampleComponent::update',
                 'access' => 'public',
                 'methods' => 'POST',
                 'params' => [
@@ -152,7 +152,7 @@ class Examples
             ],
             '/example/delete' => [
                 'label' => 'Delete Example',
-                'controller' => 'Examples::delete',
+                'controller' => 'ExampleComponent::delete',
                 'access' => 'public',
                 'methods' => 'POST',
                 'params' => [
