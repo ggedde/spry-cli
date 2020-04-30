@@ -107,12 +107,12 @@ class ExampleComponent
                     ],
                     'orderby' => [
                         'type' => 'string',
-                        'oneof' => ['id', 'name', 'updated_at', 'created_at'],
+                        'in' => ['id', 'name', 'updated_at', 'created_at'],
                         'meta' => true,
                     ],
                     'order' => [
                         'type' => 'string',
-                        'oneof' => ['ASC', 'DESC'],
+                        'in' => ['ASC', 'DESC'],
                         'meta' => true,
                     ],
                     'search' => [
