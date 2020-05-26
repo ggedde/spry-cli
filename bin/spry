@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLI_VERSION="1.0.20"
+CLI_VERSION="1.0.21"
 
 BIN_DIR=$(dirname $0)
 
@@ -193,11 +193,31 @@ do
             do
                 case $opt in
                     "Yes")
-                        echo "Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate');" >> spry/config.php
+                        echo "Spry::addHook('initialized', 'Spry\\SpryProvider\\SpryLogger::initiate');" >> spry/config.php
                         break
                         ;;
                     "No")
-                        echo "// Spry::addHook('configure', 'Spry\\SpryProvider\\SpryLogger::initiate');" >> spry/config.php
+                        echo "// Spry::addHook('initialized', 'Spry\\SpryProvider\\SpryLogger::initiate');" >> spry/config.php
+                        break
+                        ;;
+                    *) echo "invalid option $REPLY";;
+                esac
+            done
+
+             printf "\e[96mEnable Rate Limits:\e[0m"
+            echo ""
+            COLUMNS=12
+            PS3=$'\e[96mEnter your choice: \e[0m'
+            options=("Yes" "No")
+            select opt in "${options[@]}"
+            do
+                case $opt in
+                    "Yes")
+                        echo "Spry::addHook('initialized', 'Spry\\SpryProvider\\SpryRateLimits::initiate');" >> spry/config.php
+                        break
+                        ;;
+                    "No")
+                        echo "// Spry::addHook('initialized', 'Spry\\SpryProvider\\SpryRateLimits::initiate');" >> spry/config.php
                         break
                         ;;
                     *) echo "invalid option $REPLY";;
